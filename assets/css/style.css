@@ -1773,6 +1773,589 @@ button {
     transform: translate(0, 0);
 }
 
+/* ---------- Ambient Sound Toggle ---------- */
+.ambient-toggle {
+    position: fixed;
+    top: 100px;
+    right: 32px;
+    z-index: 101;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 100px;
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(200, 164, 94, 0.15);
+    color: var(--color-text-muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateX(20px);
+    animation: ambientFadeIn 1s 3s var(--ease-out) forwards;
+}
+
+@keyframes ambientFadeIn {
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.ambient-toggle:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+}
+
+.ambient-toggle.active {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+    background: rgba(200, 164, 94, 0.08);
+}
+
+.ambient-toggle svg {
+    width: 16px;
+    height: 16px;
+}
+
+.ambient-label {
+    font-family: var(--font-body);
+}
+
+/* ---------- Status Badge ---------- */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    background: rgba(37, 211, 102, 0.08);
+    border: 1px solid rgba(37, 211, 102, 0.2);
+    color: #25d366;
+}
+
+.status-badge.closed {
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+/* ---------- Hero Steam SVG ---------- */
+.hero-steam {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 300px;
+    z-index: 1;
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.steam-path {
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: steamDraw 4s ease-in-out infinite;
+}
+
+.steam-2 { animation-delay: 1s; }
+.steam-3 { animation-delay: 2s; }
+
+@keyframes steamDraw {
+    0% { stroke-dashoffset: 600; opacity: 0; }
+    30% { opacity: 1; }
+    70% { opacity: 0.5; }
+    100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/* ---------- Preloader Progress ---------- */
+.preloader-progress {
+    width: 120px;
+    height: 2px;
+    background: rgba(200, 164, 94, 0.15);
+    border-radius: 2px;
+    margin: 20px auto 0;
+    overflow: hidden;
+}
+
+.preloader-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--color-gold);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* ---------- Coffee Journey Section ---------- */
+.journey {
+    background: var(--color-bg-alt);
+    overflow: hidden;
+    padding-bottom: clamp(60px, 8vw, 100px);
+}
+
+.journey-wrapper {
+    position: relative;
+    overflow: hidden;
+    padding: 0 var(--container-padding);
+    max-width: var(--container-max);
+    margin: 0 auto;
+}
+
+.journey-track {
+    display: flex;
+    gap: 40px;
+    transition: transform 0.6s var(--ease-out);
+    cursor: grab;
+}
+
+.journey-track.dragging {
+    cursor: grabbing;
+    transition: none;
+}
+
+.journey-step {
+    min-width: calc(100% - 40px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    background: var(--color-bg-card);
+    border: 1px solid rgba(200, 164, 94, 0.08);
+    border-radius: var(--radius-xl);
+    padding: 48px;
+    transition: border-color var(--transition-fast);
+}
+
+.journey-step:hover {
+    border-color: rgba(200, 164, 94, 0.2);
+}
+
+.journey-visual {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.journey-visual img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    transition: transform 0.8s var(--ease-out);
+}
+
+.journey-step:hover .journey-visual img {
+    transform: scale(1.05);
+}
+
+.journey-icon-wrap {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 56px;
+    height: 56px;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(8px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(200, 164, 94, 0.2);
+    z-index: 2;
+}
+
+.journey-icon-svg {
+    width: 32px;
+    height: 32px;
+    color: var(--color-gold);
+}
+
+.journey-number {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 700;
+    color: rgba(200, 164, 94, 0.1);
+    line-height: 1;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.journey-info h3 {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--color-cream);
+    margin-bottom: 16px;
+}
+
+.journey-info p {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+}
+
+.journey-progress {
+    width: 100%;
+    height: 2px;
+    background: rgba(200, 164, 94, 0.1);
+    border-radius: 2px;
+    margin-top: 32px;
+    overflow: hidden;
+}
+
+.journey-progress-bar {
+    height: 100%;
+    width: 20%;
+    background: var(--color-gold);
+    border-radius: 2px;
+    transition: width 0.6s var(--ease-out);
+}
+
+.journey-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.journey-arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(200, 164, 94, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    transition: all var(--transition-fast);
+}
+
+.journey-arrow:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+    background: rgba(200, 164, 94, 0.08);
+}
+
+.journey-arrow svg {
+    width: 18px;
+    height: 18px;
+}
+
+.journey-counter {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+    min-width: 50px;
+    text-align: center;
+}
+
+.journey-counter span {
+    color: var(--color-gold);
+    font-weight: 600;
+}
+
+/* ---------- Flavor Wheel Section ---------- */
+.flavor-section {
+    background: var(--color-bg);
+}
+
+.flavor-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(48px, 6vw, 100px);
+    align-items: center;
+}
+
+.flavor-wheel-container {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.flavor-wheel {
+    width: 100%;
+    height: auto;
+}
+
+.wheel-segment {
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.wheel-segment:hover path,
+.wheel-segment.active path {
+    fill-opacity: 1;
+    stroke-width: 2;
+}
+
+.wheel-segment:hover {
+    filter: brightness(1.3);
+}
+
+.wheel-segment.active {
+    filter: brightness(1.5) drop-shadow(0 0 10px rgba(200, 164, 94, 0.3));
+}
+
+.flavor-detail {
+    margin-top: 40px;
+    padding: 32px;
+    background: var(--color-bg-card);
+    border: 1px solid rgba(200, 164, 94, 0.1);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-medium);
+}
+
+.flavor-detail.active {
+    border-color: rgba(200, 164, 94, 0.3);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.flavor-detail-icon {
+    font-size: 2rem;
+    margin-bottom: 12px;
+}
+
+.flavor-detail h3 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--color-cream);
+    margin-bottom: 8px;
+}
+
+.flavor-detail p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+}
+
+/* ---------- Menu Preview Tooltip ---------- */
+.menu-preview-tooltip {
+    position: fixed;
+    z-index: 1000;
+    pointer-events: none;
+    width: 200px;
+    height: 140px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(200, 164, 94, 0.2);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s, transform 0.3s var(--ease-out);
+}
+
+.menu-preview-tooltip.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.menu-preview-tooltip img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ---------- Reservas Section ---------- */
+.reservas {
+    background: var(--color-bg-alt);
+    overflow: hidden;
+}
+
+.reservas-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, var(--color-gold-glow), transparent 60%);
+    pointer-events: none;
+}
+
+.reservas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(48px, 6vw, 80px);
+    align-items: start;
+}
+
+.reservas-text {
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 40px;
+}
+
+.reservas-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.reservas-feature {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.reservas-feature svg {
+    width: 20px;
+    height: 20px;
+    color: var(--color-gold);
+    min-width: 20px;
+    margin-top: 2px;
+}
+
+.reservas-feature strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-cream);
+}
+
+.reservas-feature span {
+    font-size: 0.8rem;
+    color: var(--color-text-subtle);
+}
+
+.reservas-form-wrap {
+    position: relative;
+}
+
+.reservas-form {
+    background: var(--color-bg-card);
+    border: 1px solid rgba(200, 164, 94, 0.1);
+    border-radius: var(--radius-xl);
+    padding: 40px;
+}
+
+.reservas-form h3 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--color-cream);
+    margin-bottom: 28px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--color-bg);
+    border: 1px solid rgba(200, 164, 94, 0.1);
+    border-radius: var(--radius-md);
+    color: var(--color-cream);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    transition: all var(--transition-fast);
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.form-group input::placeholder {
+    color: var(--color-text-subtle);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 3px rgba(200, 164, 94, 0.1);
+}
+
+.form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239a9590' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+}
+
+.btn-full {
+    width: 100%;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.form-note {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--color-text-subtle);
+    margin-top: 16px;
+}
+
+.reservas-success {
+    background: var(--color-bg-card);
+    border: 1px solid rgba(37, 211, 102, 0.2);
+    border-radius: var(--radius-xl);
+    padding: 60px 40px;
+    text-align: center;
+}
+
+.success-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(37, 211, 102, 0.1);
+    color: #25d366;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0 auto 20px;
+    border: 2px solid rgba(37, 211, 102, 0.3);
+}
+
+.reservas-success h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-cream);
+    margin-bottom: 12px;
+}
+
+.reservas-success p {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+}
+
 /* ---------- Reduced Motion ---------- */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -1809,17 +2392,16 @@ button {
         grid-template-columns: repeat(3, 1fr);
     }
 
-    .about-grid {
+    .about-grid,
+    .flavor-layout,
+    .reservas-grid,
+    .contact-grid {
         grid-template-columns: 1fr;
         gap: 60px;
     }
 
     .about-content {
         max-width: none;
-    }
-
-    .contact-grid {
-        grid-template-columns: 1fr;
     }
 
     .menu-grid {
@@ -1829,6 +2411,20 @@ button {
     .gallery-grid {
         grid-template-columns: repeat(3, 1fr);
         grid-auto-rows: 200px;
+    }
+
+    .journey-step {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 32px;
+    }
+
+    .flavor-wheel-container {
+        max-width: 350px;
+    }
+
+    .reservas-features {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -1924,6 +2520,31 @@ button {
     .map-container {
         height: 300px;
     }
+
+    .ambient-toggle {
+        top: auto;
+        bottom: 160px;
+        right: 20px;
+        padding: 8px 12px;
+    }
+
+    .ambient-label { display: none; }
+
+    .journey-step {
+        min-width: calc(100% - 20px);
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-steam { display: none; }
+
+    .status-badge {
+        font-size: 0.65rem;
+    }
+
+    .menu-preview-tooltip { display: none; }
 
     .whatsapp-float {
         bottom: 90px;

@@ -17,8 +17,8 @@
     --color-gold-glow: rgba(200, 164, 94, 0.15);
 
     --color-text: #f5f0e8;
-    --color-text-muted: #9a9590;
-    --color-text-subtle: #6b6560;
+    --color-text-muted: #b0aaa4;
+    --color-text-subtle: #8a8580;
 
     --color-cream: #f5f0e8;
     --color-espresso: #1b0e07;
@@ -93,6 +93,44 @@ button {
 ::selection {
     background: var(--color-gold);
     color: var(--color-espresso);
+}
+
+/* ---------- Skip Link ---------- */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 16px;
+    background: var(--color-gold);
+    color: var(--color-espresso);
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 600;
+    z-index: 10010;
+    transition: top 0.3s var(--ease-out);
+}
+
+.skip-link:focus {
+    top: 16px;
+}
+
+/* ---------- Focus Visible ---------- */
+:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+}
+
+input:focus-visible,
+select:focus-visible {
+    outline: none;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 3px rgba(200, 164, 94, 0.15);
 }
 
 /* ---------- Scroll Progress Bar ---------- */

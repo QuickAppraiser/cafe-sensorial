@@ -5,8 +5,16 @@
 (function () {
     'use strict';
 
-    // Init Lucide
-    if (window.lucide) lucide.createIcons();
+    // Reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Init Lucide (defer-safe)
+    function initLucide() { if (window.lucide) lucide.createIcons(); }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLucide);
+    } else {
+        initLucide();
+    }
 
     // ---- Preloader with progress ----
     const preloader = document.getElementById('preloader');
@@ -96,7 +104,7 @@
         cursorGlow.style.top = glowY + 'px';
         requestAnimationFrame(animateCursorGlow);
     }
-    if (window.innerWidth > 768) animateCursorGlow();
+    if (window.innerWidth > 768 && !prefersReducedMotion) animateCursorGlow();
 
     // ---- Particles ----
     const particlesContainer = document.getElementById('heroParticles');
@@ -243,7 +251,8 @@
         const start = performance.now();
         (function update(now) {
             const p = Math.min((now - start) / 2000, 1);
-            el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target).toLocaleString('es-CO');
+            try { el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target).toLocaleString('es-CO'); }
+            catch { el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target); }
             if (p < 1) requestAnimationFrame(update);
         })(start);
     }
@@ -481,40 +490,45 @@
     let audioCtx, isPlaying = false;
 
     function createCoffeeShopAmbience() {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        try {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-        // Brown noise for café ambiance
-        const bufferSize = 2 * audioCtx.sampleRate;
-        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-        const data = buffer.getChannelData(0);
-        let lastOut = 0;
+            // Brown noise for café ambiance
+            const bufferSize = 2 * audioCtx.sampleRate;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            let lastOut = 0;
 
-        for (let i = 0; i < bufferSize; i++) {
-            const white = Math.random() * 2 - 1;
-            data[i] = (lastOut + (0.02 * white)) / 1.02;
-            lastOut = data[i];
-            data[i] *= 3.5;
+            for (let i = 0; i < bufferSize; i++) {
+                const white = Math.random() * 2 - 1;
+                data[i] = (lastOut + (0.02 * white)) / 1.02;
+                lastOut = data[i];
+                data[i] *= 3.5;
+            }
+
+            const source = audioCtx.createBufferSource();
+            source.buffer = buffer;
+            source.loop = true;
+
+            // Low-pass filter for warmth
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.value = 400;
+
+            // Very low volume
+            const gainNode = audioCtx.createGain();
+            gainNode.gain.value = 0;
+
+            source.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            source.start();
+
+            return { gainNode, source };
+        } catch (e) {
+            console.warn('Audio not supported:', e);
+            return null;
         }
-
-        const source = audioCtx.createBufferSource();
-        source.buffer = buffer;
-        source.loop = true;
-
-        // Low-pass filter for warmth
-        const filter = audioCtx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.value = 400;
-
-        // Very low volume
-        const gainNode = audioCtx.createGain();
-        gainNode.gain.value = 0;
-
-        source.connect(filter);
-        filter.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-        source.start();
-
-        return { gainNode, source };
     }
 
     let ambientNodes = null;
@@ -523,6 +537,7 @@
         ambientToggle.addEventListener('click', () => {
             if (!isPlaying) {
                 if (!ambientNodes) ambientNodes = createCoffeeShopAmbience();
+                if (!ambientNodes) return;
                 ambientNodes.gainNode.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 1);
                 isPlaying = true;
                 ambientToggle.classList.add('active');
@@ -624,7 +639,7 @@
         animate();
     }
 
-    // Re-init icons
-    setTimeout(() => { if (window.lucide) lucide.createIcons(); }, 150);
+    // Re-init icons (safe for deferred loading)
+    setTimeout(() => { initLucide(); }, 300);
 
 })();

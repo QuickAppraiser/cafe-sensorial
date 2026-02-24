@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sensorial's Café — Una experiencia sensorial única en el corazón del Eje Cafetero. Café de especialidad en Armenia, Quindío.">
+    <meta name="keywords" content="café, especialidad, sensorial, Armenia, Quindío, eje cafetero, Colombia, experiencia, cata">
+    <meta name="author" content="Sensorial's Café">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Sensorial's Café — Despierta tus sentidos">
+    <meta property="og:description" content="Una experiencia sensorial única en el corazón del Eje Cafetero. Café de especialidad en Armenia, Quindío.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cafesensorials.com">
+
+    <title>Sensorial's Café — Despierta tus sentidos</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Cursor glow effect -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="coffee-bean-loader">
+                <svg viewBox="0 0 100 100" class="bean-svg">
+                    <path d="M50 5C30 5 15 25 15 50C15 75 30 95 50 95C70 95 85 75 85 50C85 25 70 5 50 5Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <path d="M50 15C45 30 45 70 50 85" fill="none" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </div>
+            <p class="preloader-text">Preparando tu experiencia...</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">
+                <span class="logo-text">Sensorial's</span>
+                <span class="logo-sub">Café</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero" class="nav-link active" data-section="hero">Inicio</a></li>
+                <li><a href="#about" class="nav-link" data-section="about">Nosotros</a></li>
+                <li><a href="#experience" class="nav-link" data-section="experience">Experiencia</a></li>
+                <li><a href="#menu" class="nav-link" data-section="menu">Menú</a></li>
+                <li><a href="#gallery" class="nav-link" data-section="gallery">Galería</a></li>
+                <li><a href="#contact" class="nav-link" data-section="contact">Contacto</a></li>
+            </ul>
+            <a href="https://www.instagram.com/cafesensorials/" target="_blank" rel="noopener" class="nav-social">
+                <i data-lucide="instagram"></i>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <div class="hero-overlay"></div>
+            <div class="hero-particles" id="heroParticles"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge" data-animate="fade-down">
+                <span>Armenia, Quindío — Corazón del Eje Cafetero</span>
+            </div>
+            <h1 class="hero-title" data-animate="fade-up">
+                <span class="title-line">Despierta</span>
+                <span class="title-line title-accent">tus sentidos</span>
+            </h1>
+            <p class="hero-subtitle" data-animate="fade-up" data-delay="200">
+                Cada taza es un viaje sensorial por los aromas, sabores y texturas<br>
+                del mejor café de especialidad del Quindío.
+            </p>
+            <div class="hero-cta" data-animate="fade-up" data-delay="400">
+                <a href="#experience" class="btn btn-primary">
+                    <span>Vive la experiencia</span>
+                    <i data-lucide="arrow-right"></i>
+                </a>
+                <a href="#menu" class="btn btn-outline">
+                    <span>Ver menú</span>
+                </a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <a href="#about" class="scroll-indicator">
+                <span class="scroll-text">Descubre más</span>
+                <div class="scroll-line"></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-images" data-animate="fade-right">
+                    <div class="about-img-main">
+                        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&h=800&fit=crop&q=80" alt="Café de especialidad siendo preparado" loading="lazy">
+                    </div>
+                    <div class="about-img-secondary">
+                        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=500&fit=crop&q=80" alt="Granos de café de origen" loading="lazy">
+                    </div>
+                    <div class="about-float-card">
+                        <span class="float-number">100%</span>
+                        <span class="float-label">Café de origen<br>Quindío</span>
+                    </div>
+                </div>
+                <div class="about-content" data-animate="fade-left">
+                    <span class="section-tag">Nuestra historia</span>
+                    <h2 class="section-title">Donde cada sorbo<br>cuenta una <em>historia</em></h2>
+                    <p class="about-text">
+                        En <strong>Sensorial's Café</strong> creemos que el café es mucho más que una bebida —
+                        es una experiencia que despierta cada uno de tus sentidos. Nacidos en el corazón
+                        del <strong>Eje Cafetero colombiano</strong>, en Armenia, Quindío, traemos a tu taza
+                        la esencia misma de nuestra tierra cafetera.
+                    </p>
+                    <p class="about-text">
+                        Trabajamos directamente con caficultores locales para seleccionar los mejores
+                        granos de especialidad, tostados artesanalmente para resaltar notas únicas de
+                        origen que transforman cada visita en un momento memorable.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <span class="stat-number" data-count="100">0</span><span class="stat-symbol">%</span>
+                            <span class="stat-label">Café de especialidad</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" data-count="5">0</span><span class="stat-symbol">+</span>
+                            <span class="stat-label">Métodos de preparación</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" data-count="1500">0</span><span class="stat-symbol">+</span>
+                            <span class="stat-label">Metros de altitud</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="section experience" id="experience">
+        <div class="experience-bg"></div>
+        <div class="container">
+            <div class="section-header centered" data-animate="fade-up">
+                <span class="section-tag">La experiencia</span>
+                <h2 class="section-title">Un viaje para<br>los <em>cinco sentidos</em></h2>
+                <p class="section-desc">Cada visita a Sensorial's es una inmersión completa en el mundo del café de especialidad.</p>
+            </div>
+            <div class="senses-grid">
+                <div class="sense-card" data-animate="fade-up" data-delay="0">
+                    <div class="sense-icon">
+                        <i data-lucide="eye"></i>
+                    </div>
+                    <h3>Vista</h3>
+                    <p>Observa el arte del latte, el color ámbar del espresso perfecto y la elegancia de cada preparación.</p>
+                </div>
+                <div class="sense-card" data-animate="fade-up" data-delay="100">
+                    <div class="sense-icon">
+                        <i data-lucide="wind"></i>
+                    </div>
+                    <h3>Olfato</h3>
+                    <p>Déjate envolver por notas de caramelo, chocolate, cítricos y flores que emanan de nuestros granos recién tostados.</p>
+                </div>
+                <div class="sense-card" data-animate="fade-up" data-delay="200">
+                    <div class="sense-icon">
+                        <i data-lucide="coffee"></i>
+                    </div>
+                    <h3>Gusto</h3>
+                    <p>Descubre perfiles de sabor únicos: desde frutales y achocolatados hasta notas florales y especiadas.</p>
+                </div>
+                <div class="sense-card" data-animate="fade-up" data-delay="300">
+                    <div class="sense-icon">
+                        <i data-lucide="hand"></i>
+                    </div>
+                    <h3>Tacto</h3>
+                    <p>Siente la textura sedosa del café, la calidez de la taza artesanal y la suavidad de cada bocado.</p>
+                </div>
+                <div class="sense-card" data-animate="fade-up" data-delay="400">
+                    <div class="sense-icon">
+                        <i data-lucide="music"></i>
+                    </div>
+                    <h3>Oído</h3>
+                    <p>Escucha el susurro del agua, el crujir del grano al moler y la música que complementa tu experiencia.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Quote -->
+    <section class="parallax-quote">
+        <div class="parallax-bg"></div>
+        <div class="parallax-content" data-animate="fade-up">
+            <blockquote>
+                <p>"El café es el vino del alma, y como el buen vino, necesita todos los sentidos para apreciarlo."</p>
+            </blockquote>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="section menu" id="menu">
+        <div class="container">
+            <div class="section-header centered" data-animate="fade-up">
+                <span class="section-tag">Nuestra carta</span>
+                <h2 class="section-title">Café de <em>especialidad</em></h2>
+                <p class="section-desc">Preparaciones artesanales con los mejores granos del Quindío.</p>
+            </div>
+            <div class="menu-tabs" data-animate="fade-up">
+                <button class="menu-tab active" data-tab="bebidas-calientes">Bebidas Calientes</button>
+                <button class="menu-tab" data-tab="bebidas-frias">Bebidas Frías</button>
+                <button class="menu-tab" data-tab="metodos">Métodos</button>
+                <button class="menu-tab" data-tab="acompanantes">Acompañantes</button>
+            </div>
+            <div class="menu-content">
+                <div class="menu-panel active" id="bebidas-calientes">
+                    <div class="menu-grid" data-animate="fade-up">
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Espresso Clásico</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$5.500</span>
+                            </div>
+                            <p>Shot concentrado de nuestro blend de la casa. Intenso y aromático.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Cappuccino Sensorial</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$9.500</span>
+                            </div>
+                            <p>Espresso doble con leche vaporizada y espuma aterciopelada. Arte latte incluido.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Latte de la Casa</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$10.000</span>
+                            </div>
+                            <p>Espresso con leche cremosa y un toque de vainilla natural del Quindío.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Mocha Artesanal</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$11.000</span>
+                            </div>
+                            <p>Espresso con chocolate artesanal colombiano y leche vaporizada.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Aromática de la Finca</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$6.000</span>
+                            </div>
+                            <p>Infusiones de hierbas aromáticas cultivadas en fincas locales del Quindío.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Chocolate Campesino</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$8.500</span>
+                            </div>
+                            <p>Cacao colombiano de origen preparado con leche fresca. Tradición en cada sorbo.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-panel" id="bebidas-frias">
+                    <div class="menu-grid" data-animate="fade-up">
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Cold Brew Sensorial</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$12.000</span>
+                            </div>
+                            <p>Extracción en frío por 18 horas. Suave, dulce y refrescante.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Iced Latte</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$11.500</span>
+                            </div>
+                            <p>Espresso doble sobre hielo con leche fría y un toque dulce.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Frappé de Café</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$13.000</span>
+                            </div>
+                            <p>Mezcla helada de espresso, leche, hielo y crema batida artesanal.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Tonic Espresso</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$14.000</span>
+                            </div>
+                            <p>Espresso sobre agua tónica premium con hielo y twist de naranja.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Limonada de Café</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$12.500</span>
+                            </div>
+                            <p>Refrescante fusión de cold brew con limonada natural y menta fresca.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-panel" id="metodos">
+                    <div class="menu-grid" data-animate="fade-up">
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>V60 Pour Over</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$10.000</span>
+                            </div>
+                            <p>Filtrado manual que resalta las notas más delicadas del grano de origen.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Chemex</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$12.000</span>
+                            </div>
+                            <p>Preparación limpia y brillante. Ideal para cafés con notas frutales y florales.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>AeroPress</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$9.500</span>
+                            </div>
+                            <p>Método versátil que produce un café concentrado y con cuerpo aterciopelado.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Prensa Francesa</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$9.000</span>
+                            </div>
+                            <p>Inmersión completa del grano para un café robusto y con carácter.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Siphon</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$15.000</span>
+                            </div>
+                            <p>Preparación teatral al vacío. Una experiencia visual y gustativa única.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-panel" id="acompanantes">
+                    <div class="menu-grid" data-animate="fade-up">
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Croissant de Mantequilla</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$7.500</span>
+                            </div>
+                            <p>Hojaldrado artesanal horneado diariamente. Crujiente por fuera, suave por dentro.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Torta de Banano</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$8.000</span>
+                            </div>
+                            <p>Receta de la abuela con banano del Quindío y nueces tostadas.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Cheesecake de Maracuyá</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$9.500</span>
+                            </div>
+                            <p>Cremoso cheesecake con coulis de maracuyá fresco del eje cafetero.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Brownie de Cacao</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$8.500</span>
+                            </div>
+                            <p>Brownie húmedo con cacao colombiano premium y trozos de nuez.</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <h4>Galletas Artesanales</h4>
+                                <div class="menu-dots"></div>
+                                <span class="menu-price">$5.000</span>
+                            </div>
+                            <p>Variedad del día: avena, chispas de chocolate o mantequilla de maní.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="section gallery" id="gallery">
+        <div class="container">
+            <div class="section-header centered" data-animate="fade-up">
+                <span class="section-tag">Galería</span>
+                <h2 class="section-title">Momentos <em>sensoriales</em></h2>
+                <p class="section-desc">Cada rincón de nuestro café está diseñado para inspirarte.</p>
+            </div>
+            <div class="gallery-grid" data-animate="fade-up">
+                <div class="gallery-item large">
+                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=600&fit=crop&q=80" alt="Preparación de café" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span>El arte de la preparación</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&h=500&fit=crop&q=80" alt="Latte art" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span>Latte Art</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=500&h=500&fit=crop&q=80" alt="Granos de café" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span>Granos de origen</span>
+                    </div>
+                </div>
+                <div class="gallery-item tall">
+                    <img src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=500&h=700&fit=crop&q=80" alt="Ambiente del café" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span>Nuestro espacio</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?w=500&h=500&fit=crop&q=80" alt="Postres artesanales" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span>Repostería artesanal</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=500&h=500&fit=crop&q=80" alt="Café colombiano" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span>Café colombiano</span>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-cta" data-animate="fade-up">
+                <a href="https://www.instagram.com/cafesensorials/" target="_blank" rel="noopener" class="btn btn-outline">
+                    <i data-lucide="instagram"></i>
+                    <span>Síguenos en Instagram</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section testimonials">
+        <div class="container">
+            <div class="section-header centered" data-animate="fade-up">
+                <span class="section-tag">Testimonios</span>
+                <h2 class="section-title">Lo que dicen<br>nuestros <em>visitantes</em></h2>
+            </div>
+            <div class="testimonials-slider" data-animate="fade-up">
+                <div class="testimonial-track" id="testimonialTrack">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+                        </div>
+                        <p>"Una experiencia increíble. El V60 que probé tenía notas frutales que nunca había percibido en un café. El ambiente es mágico."</p>
+                        <div class="testimonial-author">
+                            <span class="author-name">María Alejandra G.</span>
+                            <span class="author-loc">Bogotá, Colombia</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+                        </div>
+                        <p>"El mejor café que he probado en el eje cafetero. La atención es excepcional y el lugar te transporta a otro mundo."</p>
+                        <div class="testimonial-author">
+                            <span class="author-name">Carlos Eduardo R.</span>
+                            <span class="author-loc">Medellín, Colombia</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+                        </div>
+                        <p>"Vine de vacaciones y fue el mejor hallazgo. La cata de café fue una experiencia única que recomiendo a todo el mundo."</p>
+                        <div class="testimonial-author">
+                            <span class="author-name">Laura Valentina M.</span>
+                            <span class="author-loc">Cali, Colombia</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-nav">
+                    <button class="testimonial-btn prev" id="testimonialPrev" aria-label="Anterior">
+                        <i data-lucide="chevron-left"></i>
+                    </button>
+                    <div class="testimonial-dots" id="testimonialDots"></div>
+                    <button class="testimonial-btn next" id="testimonialNext" aria-label="Siguiente">
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info" data-animate="fade-right">
+                    <span class="section-tag">Encuéntranos</span>
+                    <h2 class="section-title">Ven a vivir<br>la <em>experiencia</em></h2>
+                    <p class="contact-text">
+                        Estamos en el corazón de Armenia, Quindío, esperándote con una taza
+                        del mejor café de especialidad del Eje Cafetero.
+                    </p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i data-lucide="map-pin"></i>
+                            </div>
+                            <div>
+                                <strong>Ubicación</strong>
+                                <p>Armenia, Quindío<br>Eje Cafetero, Colombia</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i data-lucide="clock"></i>
+                            </div>
+                            <div>
+                                <strong>Horario</strong>
+                                <p>Lunes a Sábado: 8:00 AM - 8:00 PM<br>Domingos: 9:00 AM - 6:00 PM</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i data-lucide="instagram"></i>
+                            </div>
+                            <div>
+                                <strong>Redes Sociales</strong>
+                                <p><a href="https://www.instagram.com/cafesensorials/" target="_blank" rel="noopener">@cafesensorials</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-map" data-animate="fade-left">
+                    <div class="map-container">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63770.63689999999!2d-75.7!3d4.533889!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e38f5c5ceaeeaad%3A0x2a83b4fe2d30b107!2sArmenia%2C%20Quind%C3%ADo%2C%20Colombia!5e0!3m2!1ses!2s!4v1700000000000!5m2!1ses!2s"
+                            width="100%"
+                            height="100%"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Ubicación de Sensorial's Café en Armenia, Quindío">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#hero" class="footer-logo">
+                        <span class="logo-text">Sensorial's</span>
+                        <span class="logo-sub">Café</span>
+                    </a>
+                    <p>Una experiencia sensorial única en el corazón del Eje Cafetero colombiano.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navegación</h4>
+                    <ul>
+                        <li><a href="#about">Nosotros</a></li>
+                        <li><a href="#experience">Experiencia</a></li>
+                        <li><a href="#menu">Menú</a></li>
+                        <li><a href="#gallery">Galería</a></li>
+                        <li><a href="#contact">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Síguenos</h4>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/cafesensorials/" target="_blank" rel="noopener" aria-label="Instagram">
+                            <i data-lucide="instagram"></i>
+                        </a>
+                        <a href="#" target="_blank" rel="noopener" aria-label="Facebook">
+                            <i data-lucide="facebook"></i>
+                        </a>
+                        <a href="#" target="_blank" rel="noopener" aria-label="WhatsApp">
+                            <i data-lucide="message-circle"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Sensorial's Café. Todos los derechos reservados.</p>
+                <p>Hecho con <i data-lucide="heart" class="heart-icon"></i> en Armenia, Quindío</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top -->
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+        <i data-lucide="chevron-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

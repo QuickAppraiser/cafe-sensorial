@@ -1,11 +1,10 @@
 /* ============================================
-   SENSORIAL'S CAFÉ — Premium Website Styles
+   SENSORIAL'S CAFÉ — Premium Website Styles v2
    Armenia, Quindío · Eje Cafetero
    ============================================ */
 
 /* ---------- CSS Custom Properties ---------- */
 :root {
-    /* Color Palette — Elegant Dark with Gold Accents */
     --color-bg: #0a0a0a;
     --color-bg-alt: #111111;
     --color-bg-card: #1a1a1a;
@@ -22,30 +21,23 @@
     --color-text-subtle: #6b6560;
 
     --color-cream: #f5f0e8;
-    --color-coffee: #3e2723;
     --color-espresso: #1b0e07;
 
-    --color-white: #ffffff;
-    --color-black: #000000;
-
-    /* Typography */
     --font-display: 'Playfair Display', Georgia, serif;
     --font-body: 'Inter', -apple-system, sans-serif;
     --font-accent: 'Cormorant Garamond', Georgia, serif;
 
-    /* Spacing */
     --section-padding: clamp(80px, 12vw, 160px);
     --container-max: 1280px;
     --container-padding: clamp(20px, 5vw, 60px);
 
-    /* Transitions */
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
     --transition-fast: 0.3s var(--ease-out);
     --transition-medium: 0.6s var(--ease-out);
     --transition-slow: 1s var(--ease-out);
 
-    /* Border Radius */
     --radius-sm: 4px;
     --radius-md: 8px;
     --radius-lg: 16px;
@@ -53,9 +45,7 @@
 }
 
 /* ---------- Reset & Base ---------- */
-*,
-*::before,
-*::after {
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -100,6 +90,36 @@ button {
     color: inherit;
 }
 
+::selection {
+    background: var(--color-gold);
+    color: var(--color-espresso);
+}
+
+/* ---------- Scroll Progress Bar ---------- */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-gold-dark), var(--color-gold), var(--color-gold-light));
+    z-index: 10001;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px rgba(200, 164, 94, 0.5);
+}
+
+/* ---------- Grain Overlay ---------- */
+.grain-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+}
+
 /* ---------- Cursor Glow ---------- */
 .cursor-glow {
     position: fixed;
@@ -108,10 +128,11 @@ button {
     border-radius: 50%;
     background: radial-gradient(circle, var(--color-gold-glow), transparent 70%);
     pointer-events: none;
-    z-index: 9999;
+    z-index: 9997;
     transform: translate(-50%, -50%);
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.8s ease;
+    will-change: transform;
 }
 
 .cursor-glow.active {
@@ -137,23 +158,97 @@ button {
 .preloader.hidden {
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
 }
 
 .preloader-inner {
     text-align: center;
 }
 
-.coffee-bean-loader {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 24px;
-    animation: beanSpin 2s linear infinite;
+/* Coffee cup loader */
+.coffee-cup-loader {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 32px;
+    position: relative;
 }
 
-.bean-svg {
-    width: 100%;
-    height: 100%;
-    color: var(--color-gold);
+.cup {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+}
+
+.cup-body {
+    width: 50px;
+    height: 40px;
+    border: 2px solid var(--color-gold);
+    border-radius: 0 0 12px 12px;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.coffee-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0%;
+    background: linear-gradient(to top, var(--color-gold-dark), var(--color-gold));
+    animation: fillCup 2s ease-in-out infinite;
+}
+
+@keyframes fillCup {
+    0% { height: 0%; }
+    50% { height: 80%; }
+    100% { height: 0%; }
+}
+
+.cup-handle {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 18px;
+    border: 2px solid var(--color-gold);
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+}
+
+.coffee-steam {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+}
+
+.coffee-steam span {
+    display: block;
+    width: 2px;
+    height: 16px;
+    background: var(--color-gold);
+    border-radius: 2px;
+    opacity: 0;
+    animation: steam 1.5s ease-in-out infinite;
+}
+
+.coffee-steam span:nth-child(2) {
+    animation-delay: 0.3s;
+    height: 20px;
+}
+
+.coffee-steam span:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+@keyframes steam {
+    0% { opacity: 0; transform: translateY(0) scaleX(1); }
+    50% { opacity: 0.6; transform: translateY(-8px) scaleX(1.5); }
+    100% { opacity: 0; transform: translateY(-18px) scaleX(0.5); }
 }
 
 .preloader-text {
@@ -163,19 +258,26 @@ button {
     letter-spacing: 0.1em;
 }
 
-@keyframes beanSpin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.loading-dots span {
+    animation: dotPulse 1.4s infinite;
+    display: inline-block;
 }
 
-/* ---------- Container ---------- */
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotPulse {
+    0%, 80%, 100% { opacity: 0; }
+    40% { opacity: 1; }
+}
+
+/* ---------- Container & Section ---------- */
 .container {
     max-width: var(--container-max);
     margin: 0 auto;
     padding: 0 var(--container-padding);
 }
 
-/* ---------- Section ---------- */
 .section {
     padding: var(--section-padding) 0;
     position: relative;
@@ -248,7 +350,7 @@ button {
     right: 0;
     z-index: 1000;
     padding: 20px 0;
-    transition: all var(--transition-fast);
+    transition: all var(--transition-fast), transform 0.4s var(--ease-out);
 }
 
 .navbar.scrolled {
@@ -257,6 +359,10 @@ button {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(200, 164, 94, 0.08);
+}
+
+.navbar.nav-hidden {
+    transform: translateY(-100%);
 }
 
 .nav-container {
@@ -386,7 +492,19 @@ button {
 .hero-bg {
     position: absolute;
     inset: 0;
+}
+
+.hero-bg-image {
+    position: absolute;
+    inset: -20px;
     background: url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=1920&q=80') center/cover no-repeat;
+    animation: kenBurns 25s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+@keyframes kenBurns {
+    0% { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.08) translate(-1%, -1%); }
 }
 
 .hero-overlay {
@@ -394,26 +512,27 @@ button {
     inset: 0;
     background: linear-gradient(
         180deg,
-        rgba(10, 10, 10, 0.7) 0%,
-        rgba(10, 10, 10, 0.5) 40%,
-        rgba(10, 10, 10, 0.8) 100%
+        rgba(10, 10, 10, 0.65) 0%,
+        rgba(10, 10, 10, 0.4) 40%,
+        rgba(10, 10, 10, 0.75) 100%
     );
+    z-index: 1;
 }
 
 .hero-particles {
     position: absolute;
     inset: 0;
     overflow: hidden;
+    z-index: 1;
 }
 
 .hero-particles .particle {
     position: absolute;
-    width: 3px;
-    height: 3px;
     background: var(--color-gold);
     border-radius: 50%;
     opacity: 0;
     animation: particleFloat 8s infinite;
+    will-change: transform;
 }
 
 @keyframes particleFloat {
@@ -421,12 +540,8 @@ button {
         opacity: 0;
         transform: translateY(100vh) scale(0);
     }
-    10% {
-        opacity: 0.6;
-    }
-    90% {
-        opacity: 0.2;
-    }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.15; }
     100% {
         opacity: 0;
         transform: translateY(-10vh) scale(1);
@@ -444,13 +559,36 @@ button {
 .hero-badge {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
     padding: 8px 24px;
     border: 1px solid rgba(200, 164, 94, 0.3);
     border-radius: 100px;
     margin-bottom: 32px;
     backdrop-filter: blur(10px);
     background: rgba(200, 164, 94, 0.05);
+    position: relative;
+}
+
+.badge-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-gold);
+    position: relative;
+}
+
+.badge-pulse::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1px solid var(--color-gold);
+    animation: pulse 2s ease-out infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(2.5); opacity: 0; }
 }
 
 .hero-badge span {
@@ -472,12 +610,24 @@ button {
 
 .title-line {
     display: block;
-    color: var(--color-cream);
+    overflow: hidden;
 }
 
-.title-accent {
+.text-reveal {
+    display: inline-block;
+    color: var(--color-cream);
+    transform: translateY(110%);
+    transition: transform 1s var(--ease-out);
+}
+
+.title-accent .text-reveal {
     color: var(--color-gold);
     font-style: italic;
+    transition-delay: 0.15s;
+}
+
+.hero.revealed .text-reveal {
+    transform: translateY(0);
 }
 
 .hero-subtitle {
@@ -522,7 +672,7 @@ button {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
     transform: translateX(-100%);
     transition: transform 0.6s;
 }
@@ -564,6 +714,11 @@ button {
     height: 18px;
 }
 
+/* Magnetic effect handled by JS */
+.magnetic {
+    transition: transform 0.2s var(--ease-out);
+}
+
 /* ---------- Scroll Indicator ---------- */
 .hero-scroll {
     position: absolute;
@@ -600,6 +755,48 @@ button {
     50% { opacity: 1; transform: scaleY(1); }
 }
 
+/* ---------- Marquee ---------- */
+.marquee-section {
+    padding: 20px 0;
+    background: var(--color-bg-alt);
+    border-top: 1px solid rgba(200, 164, 94, 0.06);
+    border-bottom: 1px solid rgba(200, 164, 94, 0.06);
+    overflow: hidden;
+}
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+}
+
+.marquee-content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    animation: marquee 30s linear infinite;
+    white-space: nowrap;
+    padding-right: 40px;
+}
+
+.marquee-content span {
+    font-family: var(--font-accent);
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text-subtle);
+}
+
+.marquee-dot {
+    color: var(--color-gold) !important;
+    font-size: 0.6rem !important;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
 /* ---------- About Section ---------- */
 .about-grid {
     display: grid;
@@ -622,11 +819,30 @@ button {
     width: 100%;
     height: 500px;
     object-fit: cover;
-    transition: transform 1s var(--ease-out);
+    transition: transform 1.2s var(--ease-out);
 }
 
 .about-img-main:hover img {
     transform: scale(1.05);
+}
+
+/* Image reveal animation */
+.img-reveal {
+    position: relative;
+}
+
+.img-reveal::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--color-gold);
+    transform-origin: right;
+    transition: transform 1s var(--ease-out);
+    z-index: 2;
+}
+
+.img-reveal.revealed::after {
+    transform: scaleX(0);
 }
 
 .about-img-secondary {
@@ -656,6 +872,12 @@ button {
     border-radius: var(--radius-md);
     text-align: center;
     box-shadow: 0 12px 40px rgba(200, 164, 94, 0.3);
+    animation: floatCard 4s ease-in-out infinite;
+}
+
+@keyframes floatCard {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
 }
 
 .float-number {
@@ -698,9 +920,7 @@ button {
     border-top: 1px solid rgba(200, 164, 94, 0.15);
 }
 
-.stat {
-    text-align: center;
-}
+.stat { text-align: center; }
 
 .stat-number {
     font-family: var(--font-display);
@@ -752,6 +972,24 @@ button {
     transition: all var(--transition-medium);
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
+    perspective: 800px;
+}
+
+.sense-glow {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200, 164, 94, 0.15), transparent 70%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    transform: translate(-50%, -50%);
+}
+
+.sense-card:hover .sense-glow {
+    opacity: 1;
 }
 
 .sense-card::before {
@@ -794,6 +1032,7 @@ button {
     background: var(--color-gold);
     color: var(--color-espresso);
     box-shadow: 0 0 30px rgba(200, 164, 94, 0.3);
+    transform: scale(1.1);
 }
 
 .sense-icon svg {
@@ -818,15 +1057,16 @@ button {
 /* ---------- Parallax Quote ---------- */
 .parallax-quote {
     position: relative;
-    padding: clamp(80px, 10vw, 140px) 0;
+    padding: clamp(100px, 12vw, 160px) 0;
     overflow: hidden;
 }
 
 .parallax-bg {
     position: absolute;
-    inset: -50px;
+    inset: -80px;
     background: url('https://images.unsplash.com/photo-1504630083234-14187a9df0f5?w=1920&q=80') center/cover no-repeat;
-    filter: brightness(0.3);
+    filter: brightness(0.25);
+    will-change: transform;
 }
 
 .parallax-content {
@@ -836,6 +1076,17 @@ button {
     max-width: 800px;
     margin: 0 auto;
     padding: 0 var(--container-padding);
+}
+
+.quote-decoration {
+    color: var(--color-gold);
+    opacity: 0.3;
+    margin-bottom: 24px;
+}
+
+.quote-decoration svg {
+    width: 48px;
+    height: 48px;
 }
 
 .parallax-content blockquote p {
@@ -880,17 +1131,20 @@ button {
 
 .menu-panel {
     display: none;
-    animation: menuFadeIn 0.5s var(--ease-out);
 }
 
 .menu-panel.active {
     display: block;
 }
 
-@keyframes menuFadeIn {
+.menu-panel.active .menu-grid {
+    animation: menuSlideIn 0.6s var(--ease-out) both;
+}
+
+@keyframes menuSlideIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
@@ -914,6 +1168,7 @@ button {
 
 .menu-item:hover {
     padding-left: 12px;
+    border-bottom-color: rgba(200, 164, 94, 0.15);
 }
 
 .menu-item-header {
@@ -929,6 +1184,11 @@ button {
     font-weight: 500;
     color: var(--color-cream);
     white-space: nowrap;
+    transition: color var(--transition-fast);
+}
+
+.menu-item:hover h4 {
+    color: var(--color-gold-light);
 }
 
 .menu-dots {
@@ -968,6 +1228,7 @@ button {
     border-radius: var(--radius-md);
     overflow: hidden;
     cursor: pointer;
+    transition: opacity var(--transition-fast);
 }
 
 .gallery-item.large {
@@ -993,9 +1254,10 @@ button {
 .gallery-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(10, 10, 10, 0.8), transparent 60%);
+    background: linear-gradient(to top, rgba(10, 10, 10, 0.85), transparent 60%);
     display: flex;
     align-items: flex-end;
+    justify-content: space-between;
     padding: 24px;
     opacity: 0;
     transition: opacity var(--transition-fast);
@@ -1012,9 +1274,88 @@ button {
     color: var(--color-cream);
 }
 
+.gallery-expand-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--color-gold);
+}
+
 .gallery-cta {
     text-align: center;
     margin-top: 48px;
+}
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 10002;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s var(--ease-out);
+    backdrop-filter: blur(20px);
+}
+
+.lightbox.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(200, 164, 94, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-cream);
+    transition: all var(--transition-fast);
+    z-index: 1;
+}
+
+.lightbox-close:hover {
+    border-color: var(--color-gold);
+    background: rgba(200, 164, 94, 0.1);
+}
+
+.lightbox-close svg {
+    width: 24px;
+    height: 24px;
+}
+
+.lightbox-content {
+    max-width: 90vw;
+    max-height: 85vh;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.4s var(--ease-out);
+}
+
+.lightbox.active .lightbox-content {
+    transform: scale(1);
+}
+
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+}
+
+.lightbox-caption {
+    font-family: var(--font-accent);
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    margin-top: 16px;
+    letter-spacing: 0.05em;
 }
 
 /* ---------- Testimonials ---------- */
@@ -1026,17 +1367,25 @@ button {
     max-width: 800px;
     margin: 0 auto;
     overflow: hidden;
+    touch-action: pan-y;
 }
 
 .testimonial-track {
     display: flex;
     transition: transform 0.6s var(--ease-out);
+    cursor: grab;
+}
+
+.testimonial-track.dragging {
+    cursor: grabbing;
+    transition: none;
 }
 
 .testimonial-card {
     min-width: 100%;
     padding: 48px;
     text-align: center;
+    user-select: none;
 }
 
 .testimonial-stars {
@@ -1053,7 +1402,7 @@ button {
     fill: var(--color-gold);
 }
 
-.testimonial-card p {
+.testimonial-card > p {
     font-family: var(--font-accent);
     font-size: 1.25rem;
     font-weight: 300;
@@ -1154,6 +1503,11 @@ button {
     display: flex;
     gap: 20px;
     align-items: flex-start;
+    transition: transform var(--transition-fast);
+}
+
+.contact-item:hover {
+    transform: translateX(8px);
 }
 
 .contact-icon {
@@ -1166,6 +1520,12 @@ button {
     align-items: center;
     justify-content: center;
     color: var(--color-gold);
+    transition: all var(--transition-fast);
+}
+
+.contact-item:hover .contact-icon {
+    background: rgba(200, 164, 94, 0.1);
+    border-color: var(--color-gold);
 }
 
 .contact-icon svg {
@@ -1318,6 +1678,40 @@ button {
     vertical-align: middle;
 }
 
+/* ---------- WhatsApp Float ---------- */
+.whatsapp-float {
+    position: fixed;
+    bottom: 100px;
+    right: 32px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #25d366;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    transition: all var(--transition-fast);
+    animation: whatsappPulse 3s ease-in-out infinite;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5);
+}
+
+.whatsapp-float svg {
+    width: 28px;
+    height: 28px;
+}
+
+@keyframes whatsappPulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
+    50% { box-shadow: 0 4px 30px rgba(37, 211, 102, 0.6), 0 0 0 8px rgba(37, 211, 102, 0.1); }
+}
+
 /* ---------- Back to Top ---------- */
 .back-to-top {
     position: fixed;
@@ -1379,15 +1773,40 @@ button {
     transform: translate(0, 0);
 }
 
+/* ---------- Reduced Motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .hero-bg-image {
+        animation: none;
+    }
+
+    .scroll-progress {
+        transition: none;
+    }
+
+    [data-animate] {
+        opacity: 1;
+        transform: none;
+    }
+
+    .text-reveal {
+        transform: none;
+    }
+
+    .img-reveal::after {
+        display: none;
+    }
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1024px) {
     .senses-grid {
         grid-template-columns: repeat(3, 1fr);
-    }
-
-    .senses-grid .sense-card:nth-child(4),
-    .senses-grid .sense-card:nth-child(5) {
-        grid-column: span 1;
     }
 
     .about-grid {
@@ -1426,6 +1845,7 @@ button {
         opacity: 0;
         visibility: hidden;
         transition: all var(--transition-fast);
+        z-index: 999;
     }
 
     .nav-links.active {
@@ -1503,6 +1923,17 @@ button {
 
     .map-container {
         height: 300px;
+    }
+
+    .whatsapp-float {
+        bottom: 90px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .back-to-top {
+        right: 20px;
     }
 }
 

@@ -4,14 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Sensorial's Café — Una experiencia sensorial única en el corazón del Eje Cafetero. Café de especialidad en Armenia, Quindío.">
-    <meta name="keywords" content="café, especialidad, sensorial, Armenia, Quindío, eje cafetero, Colombia, experiencia, cata">
+    <meta name="keywords" content="café, especialidad, sensorial, Armenia, Quindío, eje cafetero, Colombia, experiencia, cata, café de origen">
     <meta name="author" content="Sensorial's Café">
+    <meta name="theme-color" content="#0a0a0a">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Sensorial's Café — Despierta tus sentidos">
     <meta property="og:description" content="Una experiencia sensorial única en el corazón del Eje Cafetero. Café de especialidad en Armenia, Quindío.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cafesensorials.com">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=1200&h=630&fit=crop&q=80">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
 
     <title>Sensorial's Café — Despierta tus sentidos</title>
 
@@ -26,20 +31,31 @@
     <!-- Styles -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+<body class="no-scroll">
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Grain overlay -->
+    <div class="grain-overlay"></div>
+
     <!-- Cursor glow effect -->
     <div class="cursor-glow" id="cursorGlow"></div>
 
     <!-- Preloader -->
     <div class="preloader" id="preloader">
         <div class="preloader-inner">
-            <div class="coffee-bean-loader">
-                <svg viewBox="0 0 100 100" class="bean-svg">
-                    <path d="M50 5C30 5 15 25 15 50C15 75 30 95 50 95C70 95 85 75 85 50C85 25 70 5 50 5Z" fill="none" stroke="currentColor" stroke-width="2"/>
-                    <path d="M50 15C45 30 45 70 50 85" fill="none" stroke="currentColor" stroke-width="2"/>
-                </svg>
+            <div class="coffee-cup-loader">
+                <div class="cup">
+                    <div class="cup-body">
+                        <div class="coffee-fill"></div>
+                        <div class="coffee-steam">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <div class="cup-handle"></div>
+                </div>
             </div>
-            <p class="preloader-text">Preparando tu experiencia...</p>
+            <p class="preloader-text">Preparando tu experiencia<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span></p>
         </div>
     </div>
 
@@ -61,7 +77,7 @@
             <a href="https://www.instagram.com/cafesensorials/" target="_blank" rel="noopener" class="nav-social">
                 <i data-lucide="instagram"></i>
             </a>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir menú de navegación">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -72,27 +88,29 @@
     <!-- Hero Section -->
     <section class="hero" id="hero">
         <div class="hero-bg">
+            <div class="hero-bg-image"></div>
             <div class="hero-overlay"></div>
             <div class="hero-particles" id="heroParticles"></div>
         </div>
         <div class="hero-content">
             <div class="hero-badge" data-animate="fade-down">
+                <div class="badge-pulse"></div>
                 <span>Armenia, Quindío — Corazón del Eje Cafetero</span>
             </div>
             <h1 class="hero-title" data-animate="fade-up">
-                <span class="title-line">Despierta</span>
-                <span class="title-line title-accent">tus sentidos</span>
+                <span class="title-line"><span class="text-reveal">Despierta</span></span>
+                <span class="title-line title-accent"><span class="text-reveal">tus sentidos</span></span>
             </h1>
             <p class="hero-subtitle" data-animate="fade-up" data-delay="200">
                 Cada taza es un viaje sensorial por los aromas, sabores y texturas<br>
                 del mejor café de especialidad del Quindío.
             </p>
             <div class="hero-cta" data-animate="fade-up" data-delay="400">
-                <a href="#experience" class="btn btn-primary">
+                <a href="#experience" class="btn btn-primary magnetic">
                     <span>Vive la experiencia</span>
                     <i data-lucide="arrow-right"></i>
                 </a>
-                <a href="#menu" class="btn btn-outline">
+                <a href="#menu" class="btn btn-outline magnetic">
                     <span>Ver menú</span>
                 </a>
             </div>
@@ -105,15 +123,47 @@
         </div>
     </section>
 
+    <!-- Marquee Ticker -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <div class="marquee-content">
+                <span>Café de Especialidad</span>
+                <span class="marquee-dot">◆</span>
+                <span>Origen Quindío</span>
+                <span class="marquee-dot">◆</span>
+                <span>Tostado Artesanal</span>
+                <span class="marquee-dot">◆</span>
+                <span>Experiencia Sensorial</span>
+                <span class="marquee-dot">◆</span>
+                <span>Armenia, Eje Cafetero</span>
+                <span class="marquee-dot">◆</span>
+                <span>+1.500 msnm</span>
+                <span class="marquee-dot">◆</span>
+                <span>Café de Especialidad</span>
+                <span class="marquee-dot">◆</span>
+                <span>Origen Quindío</span>
+                <span class="marquee-dot">◆</span>
+                <span>Tostado Artesanal</span>
+                <span class="marquee-dot">◆</span>
+                <span>Experiencia Sensorial</span>
+                <span class="marquee-dot">◆</span>
+                <span>Armenia, Eje Cafetero</span>
+                <span class="marquee-dot">◆</span>
+                <span>+1.500 msnm</span>
+                <span class="marquee-dot">◆</span>
+            </div>
+        </div>
+    </div>
+
     <!-- About Section -->
     <section class="section about" id="about">
         <div class="container">
             <div class="about-grid">
                 <div class="about-images" data-animate="fade-right">
-                    <div class="about-img-main">
+                    <div class="about-img-main img-reveal">
                         <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&h=800&fit=crop&q=80" alt="Café de especialidad siendo preparado" loading="lazy">
                     </div>
-                    <div class="about-img-secondary">
+                    <div class="about-img-secondary img-reveal">
                         <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=500&fit=crop&q=80" alt="Granos de café de origen" loading="lazy">
                     </div>
                     <div class="about-float-card">
@@ -164,35 +214,40 @@
                 <p class="section-desc">Cada visita a Sensorial's es una inmersión completa en el mundo del café de especialidad.</p>
             </div>
             <div class="senses-grid">
-                <div class="sense-card" data-animate="fade-up" data-delay="0">
+                <div class="sense-card tilt-card" data-animate="fade-up" data-delay="0">
+                    <div class="sense-glow"></div>
                     <div class="sense-icon">
                         <i data-lucide="eye"></i>
                     </div>
                     <h3>Vista</h3>
                     <p>Observa el arte del latte, el color ámbar del espresso perfecto y la elegancia de cada preparación.</p>
                 </div>
-                <div class="sense-card" data-animate="fade-up" data-delay="100">
+                <div class="sense-card tilt-card" data-animate="fade-up" data-delay="100">
+                    <div class="sense-glow"></div>
                     <div class="sense-icon">
                         <i data-lucide="wind"></i>
                     </div>
                     <h3>Olfato</h3>
                     <p>Déjate envolver por notas de caramelo, chocolate, cítricos y flores que emanan de nuestros granos recién tostados.</p>
                 </div>
-                <div class="sense-card" data-animate="fade-up" data-delay="200">
+                <div class="sense-card tilt-card" data-animate="fade-up" data-delay="200">
                     <div class="sense-icon">
+                        <div class="sense-glow"></div>
                         <i data-lucide="coffee"></i>
                     </div>
                     <h3>Gusto</h3>
                     <p>Descubre perfiles de sabor únicos: desde frutales y achocolatados hasta notas florales y especiadas.</p>
                 </div>
-                <div class="sense-card" data-animate="fade-up" data-delay="300">
+                <div class="sense-card tilt-card" data-animate="fade-up" data-delay="300">
+                    <div class="sense-glow"></div>
                     <div class="sense-icon">
                         <i data-lucide="hand"></i>
                     </div>
                     <h3>Tacto</h3>
                     <p>Siente la textura sedosa del café, la calidez de la taza artesanal y la suavidad de cada bocado.</p>
                 </div>
-                <div class="sense-card" data-animate="fade-up" data-delay="400">
+                <div class="sense-card tilt-card" data-animate="fade-up" data-delay="400">
+                    <div class="sense-glow"></div>
                     <div class="sense-icon">
                         <i data-lucide="music"></i>
                     </div>
@@ -207,8 +262,11 @@
     <section class="parallax-quote">
         <div class="parallax-bg"></div>
         <div class="parallax-content" data-animate="fade-up">
+            <div class="quote-decoration">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="48" height="48"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            </div>
             <blockquote>
-                <p>"El café es el vino del alma, y como el buen vino, necesita todos los sentidos para apreciarlo."</p>
+                <p>El café es el vino del alma, y como el buen vino, necesita todos los sentidos para apreciarlo.</p>
             </blockquote>
         </div>
     </section>
@@ -229,8 +287,8 @@
             </div>
             <div class="menu-content">
                 <div class="menu-panel active" id="bebidas-calientes">
-                    <div class="menu-grid" data-animate="fade-up">
-                        <div class="menu-item">
+                    <div class="menu-grid">
+                        <div class="menu-item" data-animate="fade-up" data-delay="0">
                             <div class="menu-item-header">
                                 <h4>Espresso Clásico</h4>
                                 <div class="menu-dots"></div>
@@ -238,7 +296,7 @@
                             </div>
                             <p>Shot concentrado de nuestro blend de la casa. Intenso y aromático.</p>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" data-animate="fade-up" data-delay="50">
                             <div class="menu-item-header">
                                 <h4>Cappuccino Sensorial</h4>
                                 <div class="menu-dots"></div>
@@ -246,7 +304,7 @@
                             </div>
                             <p>Espresso doble con leche vaporizada y espuma aterciopelada. Arte latte incluido.</p>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" data-animate="fade-up" data-delay="100">
                             <div class="menu-item-header">
                                 <h4>Latte de la Casa</h4>
                                 <div class="menu-dots"></div>
@@ -254,7 +312,7 @@
                             </div>
                             <p>Espresso con leche cremosa y un toque de vainilla natural del Quindío.</p>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" data-animate="fade-up" data-delay="150">
                             <div class="menu-item-header">
                                 <h4>Mocha Artesanal</h4>
                                 <div class="menu-dots"></div>
@@ -262,7 +320,7 @@
                             </div>
                             <p>Espresso con chocolate artesanal colombiano y leche vaporizada.</p>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" data-animate="fade-up" data-delay="200">
                             <div class="menu-item-header">
                                 <h4>Aromática de la Finca</h4>
                                 <div class="menu-dots"></div>
@@ -270,7 +328,7 @@
                             </div>
                             <p>Infusiones de hierbas aromáticas cultivadas en fincas locales del Quindío.</p>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item" data-animate="fade-up" data-delay="250">
                             <div class="menu-item-header">
                                 <h4>Chocolate Campesino</h4>
                                 <div class="menu-dots"></div>
@@ -281,7 +339,7 @@
                     </div>
                 </div>
                 <div class="menu-panel" id="bebidas-frias">
-                    <div class="menu-grid" data-animate="fade-up">
+                    <div class="menu-grid">
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <h4>Cold Brew Sensorial</h4>
@@ -325,7 +383,7 @@
                     </div>
                 </div>
                 <div class="menu-panel" id="metodos">
-                    <div class="menu-grid" data-animate="fade-up">
+                    <div class="menu-grid">
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <h4>V60 Pour Over</h4>
@@ -369,7 +427,7 @@
                     </div>
                 </div>
                 <div class="menu-panel" id="acompanantes">
-                    <div class="menu-grid" data-animate="fade-up">
+                    <div class="menu-grid">
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <h4>Croissant de Mantequilla</h4>
@@ -425,51 +483,68 @@
                 <p class="section-desc">Cada rincón de nuestro café está diseñado para inspirarte.</p>
             </div>
             <div class="gallery-grid" data-animate="fade-up">
-                <div class="gallery-item large">
+                <div class="gallery-item large" data-img="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&h=900&fit=crop&q=90" data-caption="El arte de la preparación">
                     <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=600&fit=crop&q=80" alt="Preparación de café" loading="lazy">
                     <div class="gallery-overlay">
                         <span>El arte de la preparación</span>
+                        <i data-lucide="maximize-2" class="gallery-expand-icon"></i>
                     </div>
                 </div>
-                <div class="gallery-item">
+                <div class="gallery-item" data-img="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&h=1000&fit=crop&q=90" data-caption="Latte Art">
                     <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&h=500&fit=crop&q=80" alt="Latte art" loading="lazy">
                     <div class="gallery-overlay">
                         <span>Latte Art</span>
+                        <i data-lucide="maximize-2" class="gallery-expand-icon"></i>
                     </div>
                 </div>
-                <div class="gallery-item">
+                <div class="gallery-item" data-img="https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=1000&h=1000&fit=crop&q=90" data-caption="Granos de origen">
                     <img src="https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=500&h=500&fit=crop&q=80" alt="Granos de café" loading="lazy">
                     <div class="gallery-overlay">
                         <span>Granos de origen</span>
+                        <i data-lucide="maximize-2" class="gallery-expand-icon"></i>
                     </div>
                 </div>
-                <div class="gallery-item tall">
+                <div class="gallery-item tall" data-img="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=1000&h=1400&fit=crop&q=90" data-caption="Nuestro espacio">
                     <img src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=500&h=700&fit=crop&q=80" alt="Ambiente del café" loading="lazy">
                     <div class="gallery-overlay">
                         <span>Nuestro espacio</span>
+                        <i data-lucide="maximize-2" class="gallery-expand-icon"></i>
                     </div>
                 </div>
-                <div class="gallery-item">
+                <div class="gallery-item" data-img="https://images.unsplash.com/photo-1498804103079-a6351b050096?w=1000&h=1000&fit=crop&q=90" data-caption="Repostería artesanal">
                     <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?w=500&h=500&fit=crop&q=80" alt="Postres artesanales" loading="lazy">
                     <div class="gallery-overlay">
                         <span>Repostería artesanal</span>
+                        <i data-lucide="maximize-2" class="gallery-expand-icon"></i>
                     </div>
                 </div>
-                <div class="gallery-item">
+                <div class="gallery-item" data-img="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=1000&h=1000&fit=crop&q=90" data-caption="Café colombiano">
                     <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=500&h=500&fit=crop&q=80" alt="Café colombiano" loading="lazy">
                     <div class="gallery-overlay">
                         <span>Café colombiano</span>
+                        <i data-lucide="maximize-2" class="gallery-expand-icon"></i>
                     </div>
                 </div>
             </div>
             <div class="gallery-cta" data-animate="fade-up">
-                <a href="https://www.instagram.com/cafesensorials/" target="_blank" rel="noopener" class="btn btn-outline">
+                <a href="https://www.instagram.com/cafesensorials/" target="_blank" rel="noopener" class="btn btn-outline magnetic">
                     <i data-lucide="instagram"></i>
                     <span>Síguenos en Instagram</span>
                 </a>
             </div>
         </div>
     </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar">
+            <i data-lucide="x"></i>
+        </button>
+        <div class="lightbox-content">
+            <img src="" alt="" id="lightboxImg">
+            <p class="lightbox-caption" id="lightboxCaption"></p>
+        </div>
+    </div>
 
     <!-- Testimonials -->
     <section class="section testimonials">
@@ -620,11 +695,16 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Sensorial's Café. Todos los derechos reservados.</p>
+                <p>&copy; 2026 Sensorial's Café. Todos los derechos reservados.</p>
                 <p>Hecho con <i data-lucide="heart" class="heart-icon"></i> en Armenia, Quindío</p>
             </div>
         </div>
     </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/57?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20Sensorial's%20Caf%C3%A9" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Contáctanos por WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
 
     <!-- Back to top -->
     <button class="back-to-top" id="backToTop" aria-label="Volver arriba">

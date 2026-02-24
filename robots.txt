@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://quickappraisalpro.github.io/cafe-sensorial/sitemap.xml

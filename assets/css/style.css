@@ -99,10 +99,6 @@ html[data-theme="light"] .grain-overlay {
     opacity: 0.015;
 }
 
-html[data-theme="light"] .about-img-secondary {
-    border-color: var(--color-bg);
-}
-
 html[data-theme="light"] .map-container iframe {
     filter: grayscale(0.2) contrast(1) brightness(1);
 }
@@ -169,6 +165,7 @@ html[data-theme="light"] .testimonial-card > p {
 }
 
 html[data-theme="light"] .about-img-secondary {
+    border-color: var(--color-bg);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
 }
 
@@ -480,9 +477,7 @@ select:focus-visible {
     border-bottom: 1px solid rgba(200, 164, 94, 0.08);
 }
 
-.navbar.nav-hidden {
-    transform: translateY(-100%);
-}
+/* navbar always visible — no hide behavior */
 
 .nav-container {
     max-width: var(--container-max);
@@ -992,6 +987,14 @@ select:focus-visible {
 }
 
 /* ---------- About Section ---------- */
+/* Prevent grid children from overflowing in all two-column grids */
+.about-grid > *,
+.flavor-layout > *,
+.reservas-grid > *,
+.contact-grid > * {
+    min-width: 0;
+}
+
 .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2149,6 +2152,7 @@ select:focus-visible {
 
 .journey-step {
     min-width: calc(100% - 40px);
+    flex-shrink: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 48px;
@@ -2159,6 +2163,12 @@ select:focus-visible {
     padding: 48px;
     transition: all var(--transition-fast);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.journey-visual,
+.journey-info {
+    min-width: 0;
 }
 
 .journey-step:hover {
@@ -2230,6 +2240,7 @@ select:focus-visible {
     font-size: 0.95rem;
     color: var(--color-text-muted);
     line-height: 1.8;
+    overflow-wrap: break-word;
 }
 
 .journey-progress {

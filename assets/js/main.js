@@ -548,7 +548,7 @@
     const navToggle = document.getElementById('navToggle');
     const navLinks = document.getElementById('navLinks');
     const navLinkItems = document.querySelectorAll('.nav-link');
-    let lastScrollY = 0, scrollDir = 'up', ticking = false;
+    let ticking = false;
 
     function handleScroll() {
         const y = window.scrollY;
@@ -557,15 +557,8 @@
         // Progress bar
         if (scrollProgress) scrollProgress.style.width = (docH > 0 ? (y / docH) * 100 : 0) + '%';
 
-        // Navbar
+        // Navbar — always visible, just add scrolled style
         navbar.classList.toggle('scrolled', y > 60);
-        if (y > 300) {
-            if (y > lastScrollY && scrollDir !== 'down') { scrollDir = 'down'; navbar.classList.add('nav-hidden'); }
-            else if (y < lastScrollY && scrollDir !== 'up') { scrollDir = 'up'; navbar.classList.remove('nav-hidden'); }
-        } else {
-            navbar.classList.remove('nav-hidden');
-        }
-        lastScrollY = y;
 
         // Back to top
         const btt = document.getElementById('backToTop');
@@ -817,9 +810,10 @@
     });
 
     function closeLightbox() {
+        if (!lightbox) return;
         lightbox.classList.remove('active');
         document.body.classList.remove('no-scroll');
-        setTimeout(() => { lightboxImg.src = ''; }, 400);
+        setTimeout(() => { if (lightboxImg) lightboxImg.src = ''; }, 400);
     }
 
     document.getElementById('lightboxClose')?.addEventListener('click', closeLightbox);

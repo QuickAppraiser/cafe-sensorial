@@ -274,19 +274,36 @@
         if (journeyNum) journeyNum.textContent = journeyIndex + 1;
     }
 
-    if (journeyPrev) journeyPrev.addEventListener('click', () => goToJourneyStep(journeyIndex - 1));
-    if (journeyNext) journeyNext.addEventListener('click', () => goToJourneyStep(journeyIndex + 1));
+    if (journeyPrev) journeyPrev.addEventListener('click', () => { goToJourneyStep(journeyIndex - 1); resetJourneyAuto(); });
+    if (journeyNext) journeyNext.addEventListener('click', () => { goToJourneyStep(journeyIndex + 1); resetJourneyAuto(); });
+
+    // Journey auto-scroll
+    let journeyAutoInterval;
+    function startJourneyAuto() {
+        journeyAutoInterval = setInterval(() => {
+            if (journeyTotal > 0) goToJourneyStep(journeyIndex >= journeyTotal - 1 ? 0 : journeyIndex + 1);
+        }, 5000);
+    }
+    function resetJourneyAuto() { clearInterval(journeyAutoInterval); startJourneyAuto(); }
+    if (journeyTotal > 1) startJourneyAuto();
+
+    // Pause auto-scroll on hover
+    if (journeyTrack) {
+        journeyTrack.addEventListener('mouseenter', () => clearInterval(journeyAutoInterval));
+        journeyTrack.addEventListener('mouseleave', () => { if (journeyTotal > 1) startJourneyAuto(); });
+    }
 
     // Touch support for journey
     if (journeyTrack) {
         let jtStartX = 0, jtDragging = false;
-        journeyTrack.addEventListener('touchstart', (e) => { jtStartX = e.touches[0].clientX; jtDragging = true; journeyTrack.classList.add('dragging'); }, { passive: true });
+        journeyTrack.addEventListener('touchstart', (e) => { jtStartX = e.touches[0].clientX; jtDragging = true; journeyTrack.classList.add('dragging'); clearInterval(journeyAutoInterval); }, { passive: true });
         journeyTrack.addEventListener('touchend', (e) => {
             if (!jtDragging) return;
             jtDragging = false;
             journeyTrack.classList.remove('dragging');
             const diff = (e.changedTouches[0]?.clientX || 0) - jtStartX;
             if (Math.abs(diff) > 50) goToJourneyStep(diff < 0 ? journeyIndex + 1 : journeyIndex - 1);
+            if (journeyTotal > 1) startJourneyAuto();
         });
     }
 
@@ -492,39 +509,130 @@
     function createCoffeeShopAmbience() {
         try {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const masterGain = audioCtx.createGain();
+            masterGain.gain.value = 0;
+            masterGain.connect(audioCtx.destination);
 
-            // Brown noise for café ambiance
-            const bufferSize = 2 * audioCtx.sampleRate;
-            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-            const data = buffer.getChannelData(0);
-            let lastOut = 0;
-
-            for (let i = 0; i < bufferSize; i++) {
-                const white = Math.random() * 2 - 1;
-                data[i] = (lastOut + (0.02 * white)) / 1.02;
-                lastOut = data[i];
-                data[i] *= 3.5;
+            // Layer 1: Warm brown noise (café background hum)
+            const brownLen = 2 * audioCtx.sampleRate;
+            const brownBuf = audioCtx.createBuffer(2, brownLen, audioCtx.sampleRate);
+            for (let ch = 0; ch < 2; ch++) {
+                const d = brownBuf.getChannelData(ch);
+                let last = 0;
+                for (let i = 0; i < brownLen; i++) {
+                    const w = Math.random() * 2 - 1;
+                    d[i] = (last + 0.02 * w) / 1.02;
+                    last = d[i];
+                    d[i] *= 3.5;
+                }
             }
+            const brownSrc = audioCtx.createBufferSource();
+            brownSrc.buffer = brownBuf;
+            brownSrc.loop = true;
+            const brownFilter = audioCtx.createBiquadFilter();
+            brownFilter.type = 'lowpass';
+            brownFilter.frequency.value = 350;
+            const brownGain = audioCtx.createGain();
+            brownGain.gain.value = 0.5;
+            brownSrc.connect(brownFilter);
+            brownFilter.connect(brownGain);
+            brownGain.connect(masterGain);
+            brownSrc.start();
 
-            const source = audioCtx.createBufferSource();
-            source.buffer = buffer;
-            source.loop = true;
+            // Layer 2: Soft tonal hum (warm sine drone)
+            const drone = audioCtx.createOscillator();
+            drone.type = 'sine';
+            drone.frequency.value = 85;
+            const droneGain = audioCtx.createGain();
+            droneGain.gain.value = 0.06;
+            const droneLfo = audioCtx.createOscillator();
+            droneLfo.frequency.value = 0.1;
+            const droneLfoGain = audioCtx.createGain();
+            droneLfoGain.gain.value = 8;
+            droneLfo.connect(droneLfoGain);
+            droneLfoGain.connect(drone.frequency);
+            drone.connect(droneGain);
+            droneGain.connect(masterGain);
+            drone.start();
+            droneLfo.start();
 
-            // Low-pass filter for warmth
-            const filter = audioCtx.createBiquadFilter();
-            filter.type = 'lowpass';
-            filter.frequency.value = 400;
+            // Layer 3: Random gentle "clinks" (spoon-on-cup)
+            function scheduleClink() {
+                if (!audioCtx || audioCtx.state === 'closed') return;
+                const delay = 3 + Math.random() * 8;
+                setTimeout(() => {
+                    if (!audioCtx || audioCtx.state === 'closed') return;
+                    const osc = audioCtx.createOscillator();
+                    osc.type = 'sine';
+                    osc.frequency.value = 1800 + Math.random() * 1200;
+                    const env = audioCtx.createGain();
+                    env.gain.setValueAtTime(0, audioCtx.currentTime);
+                    env.gain.linearRampToValueAtTime(0.03 + Math.random() * 0.02, audioCtx.currentTime + 0.005);
+                    env.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15 + Math.random() * 0.2);
+                    osc.connect(env);
+                    env.connect(masterGain);
+                    osc.start(audioCtx.currentTime);
+                    osc.stop(audioCtx.currentTime + 0.4);
+                    scheduleClink();
+                }, delay * 1000);
+            }
+            scheduleClink();
 
-            // Very low volume
-            const gainNode = audioCtx.createGain();
-            gainNode.gain.value = 0;
+            // Layer 4: Occasional soft "pour" (filtered noise burst)
+            function schedulePour() {
+                if (!audioCtx || audioCtx.state === 'closed') return;
+                const delay = 8 + Math.random() * 15;
+                setTimeout(() => {
+                    if (!audioCtx || audioCtx.state === 'closed') return;
+                    const len = audioCtx.sampleRate * 2;
+                    const buf = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+                    const d = buf.getChannelData(0);
+                    for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+                    const src = audioCtx.createBufferSource();
+                    src.buffer = buf;
+                    const bp = audioCtx.createBiquadFilter();
+                    bp.type = 'bandpass';
+                    bp.frequency.value = 2000 + Math.random() * 1500;
+                    bp.Q.value = 2;
+                    const env = audioCtx.createGain();
+                    const t = audioCtx.currentTime;
+                    env.gain.setValueAtTime(0, t);
+                    env.gain.linearRampToValueAtTime(0.015, t + 0.3);
+                    env.gain.linearRampToValueAtTime(0.02, t + 0.8);
+                    env.gain.exponentialRampToValueAtTime(0.001, t + 1.8);
+                    src.connect(bp);
+                    bp.connect(env);
+                    env.connect(masterGain);
+                    src.start(t);
+                    src.stop(t + 2);
+                    schedulePour();
+                }, delay * 1000);
+            }
+            schedulePour();
 
-            source.connect(filter);
-            filter.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            source.start();
+            // Layer 5: Subtle distant chatter (modulated noise)
+            const chatterLen = 4 * audioCtx.sampleRate;
+            const chatterBuf = audioCtx.createBuffer(1, chatterLen, audioCtx.sampleRate);
+            const cd = chatterBuf.getChannelData(0);
+            for (let i = 0; i < chatterLen; i++) {
+                cd[i] = Math.random() * 2 - 1;
+                cd[i] *= 0.5 + 0.5 * Math.sin(i / audioCtx.sampleRate * Math.PI * 3);
+            }
+            const chatterSrc = audioCtx.createBufferSource();
+            chatterSrc.buffer = chatterBuf;
+            chatterSrc.loop = true;
+            const chatterBp = audioCtx.createBiquadFilter();
+            chatterBp.type = 'bandpass';
+            chatterBp.frequency.value = 600;
+            chatterBp.Q.value = 1.5;
+            const chatterGain = audioCtx.createGain();
+            chatterGain.gain.value = 0.04;
+            chatterSrc.connect(chatterBp);
+            chatterBp.connect(chatterGain);
+            chatterGain.connect(masterGain);
+            chatterSrc.start();
 
-            return { gainNode, source };
+            return { gainNode: masterGain };
         } catch (e) {
             console.warn('Audio not supported:', e);
             return null;

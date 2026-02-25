@@ -72,6 +72,7 @@
             // Menu
             'menu.tag': 'Nuestra carta', 'menu.title': 'Café de <em>especialidad</em>',
             'menu.desc': 'Preparaciones artesanales con los mejores granos del Quindío.',
+            'menu.currency': 'Precios en COP (Pesos Colombianos)',
             'menu.tab.hot': 'Bebidas Calientes', 'menu.tab.cold': 'Bebidas Frías', 'menu.tab.methods': 'Métodos', 'menu.tab.sides': 'Acompañantes',
             'menu.hot.espresso.name': 'Espresso Clásico', 'menu.hot.espresso.desc': 'Shot concentrado de nuestro blend de la casa. Intenso y aromático.',
             'menu.hot.cappuccino.name': 'Cappuccino Sensorial', 'menu.hot.cappuccino.desc': 'Espresso doble con leche vaporizada y espuma aterciopelada. Arte latte.',
@@ -96,7 +97,7 @@
             'menu.sides.cookies.name': 'Galletas Artesanales', 'menu.sides.cookies.desc': 'Variedad del día: avena, chispas de chocolate o mantequilla de maní.',
             // Gallery
             'gallery.tag': 'Galería', 'gallery.title': 'Momentos <em>sensoriales</em>',
-            'gallery.cap1': 'El arte de la preparación', 'gallery.cap3': 'Granos de origen',
+            'gallery.cap1': 'El arte de la preparación', 'gallery.cap2': 'Latte Art', 'gallery.cap3': 'Granos de origen',
             'gallery.cap4': 'Nuestro espacio', 'gallery.cap5': 'Repostería artesanal', 'gallery.cap6': 'Café colombiano',
             'gallery.cta': 'Síguenos en Instagram',
             'lightbox.close': 'Cerrar',
@@ -105,6 +106,8 @@
             'test.q1': '"Una experiencia increíble. El V60 que probé tenía notas frutales que nunca había percibido en un café. El ambiente es mágico."',
             'test.q2': '"El mejor café que he probado en el eje cafetero. La atención es excepcional y el lugar te transporta a otro mundo."',
             'test.q3': '"Vine de vacaciones y fue el mejor hallazgo. La cata de café fue una experiencia única que recomiendo a todo el mundo."',
+            'test.q4': '"Como barista profesional, quede impresionado con la calidad del tueste y la precisión en cada preparación. Un nivel que pocos cafés alcanzan."',
+            'test.q5': '"Llevé a mi familia al tour de origen y fue la mejor experiencia de nuestro viaje al eje cafetero. Los niños aprendieron y disfrutaron cada momento."',
             // Reservas
             'res.tag': 'Experiencias exclusivas', 'res.title': 'Reserva tu<br><em>cata sensorial</em>',
             'res.text': 'Vive una experiencia privada donde nuestro barista te guiará por un viaje de aromas, sabores y texturas del café de especialidad del Quindío.',
@@ -135,8 +138,10 @@
             'footer.brand': 'Café de especialidad en Parque Fundadores, Armenia, Quindío. Una experiencia sensorial única en el corazón del Eje Cafetero colombiano. <a href="tel:+573104058664" style="color:var(--color-gold)">☎ 310 405 8664</a>',
             'footer.rights': '© 2026 Sensorial\'s Café. Todos los derechos reservados.',
             'footer.made': 'Hecho con <i data-lucide="heart" class="heart-icon"></i> en Armenia, Quindío',
-            // Misc
+            // Misc & Validation
             'whatsapp.aria': 'Contáctanos por WhatsApp', 'backtop.aria': 'Volver arriba',
+            'val.name': 'Por favor ingresa tu nombre', 'val.email': 'Por favor ingresa un email válido',
+            'val.phone': 'Por favor ingresa tu teléfono',
         },
         en: {
             // Nav
@@ -203,6 +208,7 @@
             // Menu
             'menu.tag': 'Our menu', 'menu.title': 'Specialty <em>coffee</em>',
             'menu.desc': 'Artisan preparations with the finest beans from Quindío.',
+            'menu.currency': 'Prices in COP (Colombian Pesos)',
             'menu.tab.hot': 'Hot Drinks', 'menu.tab.cold': 'Cold Drinks', 'menu.tab.methods': 'Methods', 'menu.tab.sides': 'Sides',
             'menu.hot.espresso.name': 'Classic Espresso', 'menu.hot.espresso.desc': 'Concentrated shot from our house blend. Intense and aromatic.',
             'menu.hot.cappuccino.name': 'Sensorial Cappuccino', 'menu.hot.cappuccino.desc': 'Double espresso with steamed milk and velvety foam. Latte art.',
@@ -227,7 +233,7 @@
             'menu.sides.cookies.name': 'Artisan Cookies', 'menu.sides.cookies.desc': 'Daily variety: oat, chocolate chip, or peanut butter.',
             // Gallery
             'gallery.tag': 'Gallery', 'gallery.title': 'Sensory <em>moments</em>',
-            'gallery.cap1': 'The art of brewing', 'gallery.cap3': 'Origin beans',
+            'gallery.cap1': 'The art of brewing', 'gallery.cap2': 'Latte Art', 'gallery.cap3': 'Origin beans',
             'gallery.cap4': 'Our space', 'gallery.cap5': 'Artisan pastries', 'gallery.cap6': 'Colombian coffee',
             'gallery.cta': 'Follow us on Instagram',
             'lightbox.close': 'Close',
@@ -236,6 +242,8 @@
             'test.q1': '"An incredible experience. The V60 I tried had fruity notes I had never perceived in coffee. The atmosphere is magical."',
             'test.q2': '"The best coffee I\'ve had in the Coffee Axis. The service is exceptional and the place transports you to another world."',
             'test.q3': '"I came on vacation and it was the best find. The coffee tasting was a unique experience I recommend to everyone."',
+            'test.q4': '"As a professional barista, I was impressed by the roast quality and precision in every preparation. A level few cafés achieve."',
+            'test.q5': '"I brought my family to the origin tour and it was the best experience of our Coffee Axis trip. The kids learned and enjoyed every moment."',
             // Reservas
             'res.tag': 'Exclusive experiences', 'res.title': 'Book your<br><em>sensory tasting</em>',
             'res.text': 'Enjoy a private experience where our barista will guide you through a journey of aromas, flavors, and textures of Quindío\'s specialty coffee.',
@@ -266,8 +274,10 @@
             'footer.brand': 'Specialty coffee at Parque Fundadores, Armenia, Quindío. A unique sensory experience in the heart of the Colombian Coffee Axis. <a href="tel:+573104058664" style="color:var(--color-gold)">☎ 310 405 8664</a>',
             'footer.rights': '© 2026 Sensorial\'s Café. All rights reserved.',
             'footer.made': 'Made with <i data-lucide="heart" class="heart-icon"></i> in Armenia, Quindío',
-            // Misc
+            // Misc & Validation
             'whatsapp.aria': 'Contact us on WhatsApp', 'backtop.aria': 'Back to top',
+            'val.name': 'Please enter your name', 'val.email': 'Please enter a valid email',
+            'val.phone': 'Please enter your phone number',
         }
     };
 
@@ -390,6 +400,15 @@
 
         // Re-run dynamic text
         updateGreetingAndStatus();
+
+        // Update WhatsApp links with localized message
+        const waMsg = lang === 'es'
+            ? 'Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20Sensorial\'s%20Caf%C3%A9'
+            : 'Hi%2C%20I\'d%20like%20to%20know%20more%20about%20Sensorial\'s%20Caf%C3%A9';
+        const waUrl = 'https://wa.me/573104058664?text=' + waMsg;
+        const waFloat = document.getElementById('whatsappFloat');
+        if (waFloat) waFloat.href = waUrl;
+        document.querySelectorAll('a[href*="wa.me"]').forEach(a => { a.href = waUrl; });
 
         // Re-init Lucide for any innerHTML replacements
         if (window.lucide) setTimeout(() => lucide.createIcons(), 50);
@@ -819,8 +838,39 @@
             dateInput.setAttribute('min', today);
         }
 
+        // Inline validation helpers
+        function showError(id, msg) {
+            const el = document.getElementById(id);
+            const input = el?.previousElementSibling;
+            if (el) { el.textContent = msg; el.classList.add('visible'); }
+            if (input) input.classList.add('invalid');
+        }
+        function clearErrors() {
+            reservasForm.querySelectorAll('.form-error').forEach(e => { e.textContent = ''; e.classList.remove('visible'); });
+            reservasForm.querySelectorAll('.invalid').forEach(e => e.classList.remove('invalid'));
+        }
+        // Clear error on input
+        reservasForm.querySelectorAll('input, select').forEach(inp => {
+            inp.addEventListener('input', () => {
+                inp.classList.remove('invalid');
+                const errEl = inp.nextElementSibling;
+                if (errEl?.classList.contains('form-error')) { errEl.textContent = ''; errEl.classList.remove('visible'); }
+            });
+        });
+
         reservasForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            clearErrors();
+            const t = T[currentLang];
+            let valid = true;
+            const name = document.getElementById('resName');
+            const email = document.getElementById('resEmail');
+            const phone = document.getElementById('resPhone');
+            if (!name.value.trim()) { showError('errorName', t['val.name']); valid = false; }
+            if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { showError('errorEmail', t['val.email']); valid = false; }
+            if (!phone.value.trim()) { showError('errorPhone', t['val.phone']); valid = false; }
+            if (!valid) return;
+
             const btn = reservasForm.querySelector('button[type="submit"]');
             btn.innerHTML = '<span>' + (currentLang === 'es' ? 'Enviando...' : 'Sending...') + '</span>';
             btn.disabled = true;

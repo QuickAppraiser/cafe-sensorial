@@ -132,6 +132,50 @@ html[data-theme="light"] .cursor-glow {
     display: none;
 }
 
+html[data-theme="light"] .parallax-bg {
+    filter: brightness(0.35);
+}
+
+html[data-theme="light"] .parallax-content blockquote p {
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+html[data-theme="light"] .flavor-detail {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="light"] .experience-bg {
+    background: radial-gradient(ellipse at 30% 50%, rgba(176, 141, 62, 0.06), transparent 60%);
+}
+
+html[data-theme="light"] .sense-card {
+    border-color: rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="light"] .sense-card:hover {
+    border-color: rgba(176, 141, 62, 0.25);
+}
+
+html[data-theme="light"] .menu-item {
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="light"] .menu-tab {
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+html[data-theme="light"] .testimonial-card > p {
+    color: var(--color-text);
+}
+
+html[data-theme="light"] .about-img-secondary {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+}
+
+html[data-theme="light"] .whatsapp-float {
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+}
+
 /* ---------- Reset & Base ---------- */
 *, *::before, *::after {
     margin: 0;
@@ -466,6 +510,14 @@ select:focus-visible {
     line-height: 1.7;
     max-width: 560px;
     margin: 0 auto;
+}
+
+.menu-currency-note {
+    font-size: 0.78rem;
+    color: var(--color-text-subtle);
+    letter-spacing: 0.06em;
+    margin-top: 8px;
+    text-transform: uppercase;
 }
 
 /* ---------- Navigation ---------- */
@@ -1954,7 +2006,8 @@ select:focus-visible {
 [data-animate] {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+    transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+    will-change: opacity, transform;
 }
 
 [data-animate="fade-down"] {
@@ -1973,6 +2026,13 @@ select:focus-visible {
     opacity: 1;
     transform: translate(0, 0);
 }
+
+/* Staggered sense cards */
+.sense-card[data-animate] { transition-duration: 0.9s; }
+.sense-card[data-animate][data-delay="100"] { transition-delay: 0.08s; }
+.sense-card[data-animate][data-delay="200"] { transition-delay: 0.16s; }
+.sense-card[data-animate][data-delay="300"] { transition-delay: 0.24s; }
+.sense-card[data-animate][data-delay="400"] { transition-delay: 0.32s; }
 
 /* ---------- Ambient Sound Toggle ---------- */
 .ambient-toggle {
@@ -2530,6 +2590,24 @@ select:focus-visible {
     width: 100%;
     justify-content: center;
     margin-top: 8px;
+}
+
+.form-error {
+    display: none;
+    font-size: 0.75rem;
+    color: #ef4444;
+    margin-top: 4px;
+    padding-left: 2px;
+}
+
+.form-error.visible {
+    display: block;
+}
+
+.form-group input.invalid,
+.form-group select.invalid {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
 }
 
 .form-note {

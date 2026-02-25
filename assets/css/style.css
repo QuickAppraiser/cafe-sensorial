@@ -439,7 +439,7 @@ select:focus-visible {
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 36px;
+    gap: 32px;
 }
 
 .nav-link {

@@ -25,6 +25,8 @@
     <meta name="geo.position" content="4.5339;-75.6811">
     <meta name="ICBM" content="4.5339, -75.6811">
     <meta name="language" content="es">
+    <meta name="rating" content="general">
+    <meta name="revisit-after" content="7 days">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -143,6 +145,56 @@
     }
     </script>
 
+    <!-- FAQ Schema for Rich Results -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "¿Dónde se encuentra Sensorial's Café?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Sensorial's Café está ubicado en Parque Fundadores, Armenia, Quindío, en el corazón del Eje Cafetero colombiano."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "¿Cuál es el horario de atención de Sensorial's Café?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Lunes a Sábado de 8:00 AM a 8:00 PM. Domingos de 9:00 AM a 6:00 PM."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "¿Qué tipo de café sirven en Sensorial's Café?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Servimos 100% café de especialidad de origen Quindío, con variedades Castillo, Caturra y Colombia cultivadas a más de 1.500 metros de altitud. Ofrecemos preparaciones en V60, Chemex, AeroPress, Prensa Francesa y Sifón."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "¿Puedo reservar una cata sensorial de café?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Sí, ofrecemos catas sensoriales, talleres de barista, tours de origen y experiencias premium para grupos de 2 a 8 personas. Puedes reservar a través de nuestro sitio web o contactarnos al 310 405 8664."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "¿Cuánto cuesta una experiencia en Sensorial's Café?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Cata Sensorial desde $45.000/persona, Taller de Barista desde $65.000/persona, Tour de Origen desde $80.000/persona y Experiencia Premium desde $120.000/persona. Precios en pesos colombianos."
+                }
+            }
+        ]
+    }
+    </script>
+
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
     <link rel="apple-touch-icon" href="https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=180&h=180&fit=crop&q=80">
@@ -155,9 +207,11 @@
 
     <!-- Preload critical resources -->
     <link rel="preload" as="image" href="https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=1920&q=80">
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1504630083234-14187a9df0f5?w=1920&q=80">
 
-    <!-- Google Fonts (optimized weights) -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+    <!-- Google Fonts (optimized: reduced weights, preloaded CSS) -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 
     <!-- Lucide Icons (pinned version, deferred) -->
     <script src="https://unpkg.com/lucide@0.263.1" defer></script>
@@ -167,8 +221,8 @@
     (function(){var t=localStorage.getItem('cafe-theme');if(t)document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('cafe-lang');if(l)document.documentElement.lang=l;})();
     </script>
 
-    <link rel="stylesheet" href="assets/css/style.css?v=7.5">
-    <script src="assets/js/main.js?v=7.5" defer></script>
+    <link rel="stylesheet" href="assets/css/style.css?v=7.6">
+    <script src="assets/js/main.js?v=7.6" defer></script>
 </head>
 <body class="no-scroll">
     <!-- Skip Navigation -->
@@ -308,10 +362,10 @@
             <div class="about-grid">
                 <div class="about-images" data-animate="fade-right">
                     <div class="about-img-main img-reveal">
-                        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&h=800&fit=crop&q=80" alt="Café de especialidad preparado artesanalmente en Sensorial's Café Armenia Quindío" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&h=800&fit=crop&q=80" alt="Café de especialidad preparado artesanalmente en Sensorial's Café Armenia Quindío" width="600" height="800" loading="lazy" decoding="async">
                     </div>
                     <div class="about-img-secondary img-reveal">
-                        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=500&fit=crop&q=80" alt="Granos de café de especialidad del Eje Cafetero Quindío" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=500&fit=crop&q=80" alt="Granos de café de especialidad del Eje Cafetero Quindío" width="400" height="500" loading="lazy" decoding="async">
                     </div>
                     <div class="about-float-card">
                         <span class="float-number">100%</span>
@@ -367,7 +421,7 @@
                         <div class="journey-icon-wrap">
                             <svg viewBox="0 0 80 80" class="journey-icon-svg"><circle cx="40" cy="55" r="12" fill="none" stroke="currentColor" stroke-width="2"/><path d="M40 43 V25" stroke="currentColor" stroke-width="2"/><path d="M32 30 Q40 20 48 30" fill="none" stroke="currentColor" stroke-width="2"/></svg>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=400&h=300&fit=crop&q=80" alt="Semilla de café colombiano de especialidad cultivada en el Quindío" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=400&h=300&fit=crop&q=80" alt="Semilla de café colombiano de especialidad cultivada en el Quindío" width="400" height="300" loading="lazy" decoding="async">
                     </div>
                     <div class="journey-info">
                         <span class="journey-number">01</span>
@@ -380,7 +434,7 @@
                         <div class="journey-icon-wrap">
                             <svg viewBox="0 0 80 80" class="journey-icon-svg"><path d="M20 60 Q30 30 40 25 Q50 30 60 60" fill="none" stroke="currentColor" stroke-width="2"/><path d="M30 55 Q35 40 40 38 Q45 40 50 55" fill="none" stroke="currentColor" stroke-width="2"/><line x1="40" y1="25" x2="40" y2="15" stroke="currentColor" stroke-width="2"/><circle cx="40" cy="12" r="3" fill="currentColor"/></svg>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1524350876685-274059332603?w=400&h=300&fit=crop&q=80" alt="Cultivo de café bajo sombra en finca del Eje Cafetero colombiano" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1524350876685-274059332603?w=400&h=300&fit=crop&q=80" alt="Cultivo de café bajo sombra en finca del Eje Cafetero colombiano" width="400" height="300" loading="lazy" decoding="async">
                     </div>
                     <div class="journey-info">
                         <span class="journey-number">02</span>
@@ -393,7 +447,7 @@
                         <div class="journey-icon-wrap">
                             <svg viewBox="0 0 80 80" class="journey-icon-svg"><ellipse cx="40" cy="50" rx="18" ry="12" fill="none" stroke="currentColor" stroke-width="2"/><path d="M28 45 Q30 35 40 32 Q50 35 52 45" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="35" cy="48" r="3" fill="currentColor"/><circle cx="45" cy="48" r="3" fill="currentColor"/><circle cx="40" cy="53" r="3" fill="currentColor"/></svg>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1746623691157-c4c7a3bad0c4?w=400&h=300&fit=crop&q=80" alt="Cosecha manual de café cereza en Armenia Quindío" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1746623691157-c4c7a3bad0c4?w=400&h=300&fit=crop&q=80" alt="Cosecha manual de café cereza en Armenia Quindío" width="400" height="300" loading="lazy" decoding="async">
                     </div>
                     <div class="journey-info">
                         <span class="journey-number">03</span>
@@ -406,7 +460,7 @@
                         <div class="journey-icon-wrap">
                             <svg viewBox="0 0 80 80" class="journey-icon-svg"><rect x="25" y="35" width="30" height="25" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M30 35 V30 Q40 22 50 30 V35" fill="none" stroke="currentColor" stroke-width="2"/><path d="M35 28 Q37 20 40 18" stroke="currentColor" stroke-width="1.5" opacity="0.6"/><path d="M40 25 Q42 17 44 15" stroke="currentColor" stroke-width="1.5" opacity="0.6"/><path d="M45 28 Q47 20 49 18" stroke="currentColor" stroke-width="1.5" opacity="0.6"/></svg>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1595434091143-b375ced5fe5c?w=400&h=300&fit=crop&q=80" alt="Tostado artesanal de café de especialidad del Quindío" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1595434091143-b375ced5fe5c?w=400&h=300&fit=crop&q=80" alt="Tostado artesanal de café de especialidad del Quindío" width="400" height="300" loading="lazy" decoding="async">
                     </div>
                     <div class="journey-info">
                         <span class="journey-number">04</span>
@@ -419,7 +473,7 @@
                         <div class="journey-icon-wrap">
                             <svg viewBox="0 0 80 80" class="journey-icon-svg"><path d="M25 60 L25 35 Q25 25 35 25 L45 25 Q55 25 55 35 L55 60" fill="none" stroke="currentColor" stroke-width="2"/><path d="M55 40 Q65 40 65 48 Q65 56 55 56" fill="none" stroke="currentColor" stroke-width="2"/><line x1="25" y1="60" x2="55" y2="60" stroke="currentColor" stroke-width="2"/><path d="M35 20 Q36 12 38 10" stroke="currentColor" stroke-width="1.5" opacity="0.5"/><path d="M40 18 Q41 10 43 8" stroke="currentColor" stroke-width="1.5" opacity="0.5"/><path d="M45 20 Q46 12 48 10" stroke="currentColor" stroke-width="1.5" opacity="0.5"/></svg>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=300&fit=crop&q=80" alt="Preparación de café con métodos artesanales en Sensorial's Café Armenia" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=300&fit=crop&q=80" alt="Preparación de café con métodos artesanales en Sensorial's Café Armenia" width="400" height="300" loading="lazy" decoding="async">
                     </div>
                     <div class="journey-info">
                         <span class="journey-number">05</span>
@@ -647,27 +701,27 @@
             </div>
             <div class="gallery-grid" data-animate="fade-up">
                 <div class="gallery-item large" data-img="https://images.unsplash.com/photo-1507133750040-4a8f57021571?w=1200&q=90" data-caption-es="El arte de la preparación" data-caption-en="The art of brewing" data-caption="El arte de la preparación">
-                    <img src="https://images.unsplash.com/photo-1507133750040-4a8f57021571?w=800&h=600&fit=crop&q=80" alt="Barista preparando café de especialidad en Sensorial's Café Armenia Quindío" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1507133750040-4a8f57021571?w=800&h=600&fit=crop&q=80" alt="Barista preparando café de especialidad en Sensorial's Café Armenia Quindío" width="800" height="600" loading="lazy" decoding="async">
                     <div class="gallery-overlay"><span data-i18n="gallery.cap1">El arte de la preparación</span><i data-lucide="maximize-2" class="gallery-expand-icon"></i></div>
                 </div>
                 <div class="gallery-item" data-img="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&q=90" data-caption-es="Latte Art" data-caption-en="Latte Art" data-caption="Latte Art">
-                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&h=500&fit=crop&q=80" alt="Latte art en café de especialidad Armenia Quindío" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&h=500&fit=crop&q=80" alt="Latte art en café de especialidad Armenia Quindío" width="500" height="500" loading="lazy" decoding="async">
                     <div class="gallery-overlay"><span data-i18n="gallery.cap2">Latte Art</span><i data-lucide="maximize-2" class="gallery-expand-icon"></i></div>
                 </div>
                 <div class="gallery-item" data-img="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=1000&q=90" data-caption-es="Granos de origen" data-caption-en="Origin beans" data-caption="Granos de origen">
-                    <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&h=500&fit=crop&q=80" alt="Granos de café de origen seleccionados del Eje Cafetero" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&h=500&fit=crop&q=80" alt="Granos de café de origen seleccionados del Eje Cafetero" width="500" height="500" loading="lazy" decoding="async">
                     <div class="gallery-overlay"><span data-i18n="gallery.cap3">Granos de origen</span><i data-lucide="maximize-2" class="gallery-expand-icon"></i></div>
                 </div>
                 <div class="gallery-item tall" data-img="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=1000&q=90" data-caption-es="Nuestro espacio" data-caption-en="Our space" data-caption="Nuestro espacio">
-                    <img src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=500&h=700&fit=crop&q=80" alt="Interior de cafetería premium Sensorial's Café en Armenia" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=500&h=700&fit=crop&q=80" alt="Interior de cafetería premium Sensorial's Café en Armenia" width="500" height="700" loading="lazy" decoding="async">
                     <div class="gallery-overlay"><span data-i18n="gallery.cap4">Nuestro espacio</span><i data-lucide="maximize-2" class="gallery-expand-icon"></i></div>
                 </div>
                 <div class="gallery-item" data-img="https://images.unsplash.com/photo-1498804103079-a6351b050096?w=1000&q=90" data-caption-es="Repostería artesanal" data-caption-en="Artisan pastries" data-caption="Repostería artesanal">
-                    <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?w=500&h=500&fit=crop&q=80" alt="Repostería artesanal para acompañar café de especialidad" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?w=500&h=500&fit=crop&q=80" alt="Repostería artesanal para acompañar café de especialidad" width="500" height="500" loading="lazy" decoding="async">
                     <div class="gallery-overlay"><span data-i18n="gallery.cap5">Repostería artesanal</span><i data-lucide="maximize-2" class="gallery-expand-icon"></i></div>
                 </div>
                 <div class="gallery-item" data-img="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=1000&q=90" data-caption-es="Café colombiano" data-caption-en="Colombian coffee" data-caption="Café colombiano">
-                    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=500&h=500&fit=crop&q=80" alt="Taza de café colombiano de origen Quindío" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=500&h=500&fit=crop&q=80" alt="Taza de café colombiano de origen Quindío" width="500" height="500" loading="lazy" decoding="async">
                     <div class="gallery-overlay"><span data-i18n="gallery.cap6">Café colombiano</span><i data-lucide="maximize-2" class="gallery-expand-icon"></i></div>
                 </div>
             </div>

@@ -389,6 +389,8 @@ select:focus-visible {
 .section {
     padding: var(--section-padding) 0;
     position: relative;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 800px;
 }
 
 .section-tag {

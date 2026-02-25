@@ -1,11 +1,280 @@
 /* ============================================
-   SENSORIAL'S CAFÉ — Main JavaScript v3
-   "Outside the box" features
+   SENSORIAL'S CAFÉ — Main JavaScript v4
+   Light mode, bilingual (ES/EN), ambient sound
    ============================================ */
 (function () {
     'use strict';
 
-    // Reduced motion preference
+    // ---- Translations Dictionary ----
+    const T = {
+        es: {
+            // Nav
+            'nav.home': 'Inicio', 'nav.about': 'Nosotros', 'nav.menu': 'Menú',
+            'nav.gallery': 'Galería', 'nav.reservations': 'Reservas', 'nav.contact': 'Contacto',
+            'nav.toggle': 'Abrir menú',
+            // Skip & Preloader
+            'skip': 'Saltar al contenido principal',
+            'preloader.text': 'Preparando tu experiencia<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>',
+            // Ambient
+            'ambient.label': 'Sonido', 'ambient.aria': 'Activar sonido ambiental',
+            // Hero
+            'hero.title1': 'Despierta', 'hero.title2': 'tus sentidos',
+            'hero.subtitle': 'Cada taza es un viaje sensorial por los aromas, sabores y texturas<br>del mejor café de especialidad de Armenia, Quindío.',
+            'hero.cta1': 'Vive la experiencia', 'hero.cta2': 'Ver menú', 'hero.scroll': 'Descubre más',
+            // Status & Greeting
+            'status.open': 'Abierto ahora', 'status.closed': 'Cerrado ahora',
+            'greeting.morning': 'Buenos días', 'greeting.afternoon': 'Buenas tardes', 'greeting.evening': 'Buenas noches',
+            'greeting.suffix': ' — Armenia, Quindío',
+            // Marquee
+            'marquee.1': 'Café de Especialidad', 'marquee.2': 'Origen Quindío', 'marquee.3': 'Tostado Artesanal',
+            'marquee.4': 'Experiencia Sensorial', 'marquee.5': 'Armenia, Eje Cafetero', 'marquee.6': '+1.500 msnm',
+            // About
+            'about.tag': 'Nuestra historia',
+            'about.title': 'Donde cada sorbo<br>cuenta una <em>historia</em>',
+            'about.text1': 'En <strong>Sensorial\'s Café</strong> creemos que el café es mucho más que una bebida — es una experiencia que despierta cada uno de tus sentidos. Nacidos en el corazón del <strong>Eje Cafetero colombiano</strong>, en Armenia, Quindío, traemos a tu taza la esencia misma de nuestra tierra cafetera.',
+            'about.text2': 'Trabajamos directamente con caficultores locales para seleccionar los mejores granos de especialidad, tostados artesanalmente para resaltar notas únicas de origen que transforman cada visita en un momento memorable.',
+            'about.float': 'Café de origen<br>Quindío',
+            'about.stat1': 'Café de especialidad', 'about.stat2': 'Métodos de preparación', 'about.stat3': 'Metros de altitud',
+            // Journey
+            'journey.tag': 'Del origen a tu taza', 'journey.title': 'El viaje del <em>café</em>',
+            'journey.desc': 'Desliza para descubrir cada etapa del recorrido de nuestro café de especialidad.',
+            'journey.s1.title': 'La Semilla', 'journey.s1.text': 'Todo comienza con la selección de las mejores variedades: Castillo, Caturra y Colombia, cultivadas a más de 1.500 metros de altitud en las montañas del Quindío.',
+            'journey.s2.title': 'El Cultivo', 'journey.s2.text': 'Nuestros caficultores cuidan cada planta con prácticas sostenibles, bajo sombra natural, respetando los ciclos de la tierra y la biodiversidad del eje cafetero.',
+            'journey.s3.title': 'La Cosecha', 'journey.s3.text': 'Recolección manual cereza por cereza, seleccionando solo los frutos en su punto óptimo de maduración. Un proceso artesanal que garantiza la calidad.',
+            'journey.s4.title': 'El Tostado', 'journey.s4.text': 'Tueste artesanal en pequeños lotes, controlando temperatura y tiempo para desarrollar el perfil sensorial único de cada origen. Ciencia y arte en cada tanda.',
+            'journey.s5.title': 'Tu Taza', 'journey.s5.text': 'El momento donde todo cobra sentido. Preparado por baristas expertos en el método que elijas, cada taza cuenta la historia completa de su origen.',
+            // Experience
+            'exp.tag': 'La experiencia', 'exp.title': 'Un viaje para<br>los <em>cinco sentidos</em>',
+            'exp.desc': 'Cada visita a Sensorial\'s es una inmersión completa en el mundo del café de especialidad.',
+            'exp.sight.title': 'Vista', 'exp.sight.text': 'Observa el arte del latte, el color ámbar del espresso perfecto y la elegancia de cada preparación.',
+            'exp.smell.title': 'Olfato', 'exp.smell.text': 'Déjate envolver por notas de caramelo, chocolate, cítricos y flores que emanan de nuestros granos recién tostados.',
+            'exp.taste.title': 'Gusto', 'exp.taste.text': 'Descubre perfiles de sabor únicos: desde frutales y achocolatados hasta notas florales y especiadas.',
+            'exp.touch.title': 'Tacto', 'exp.touch.text': 'Siente la textura sedosa del café, la calidez de la taza artesanal y la suavidad de cada bocado.',
+            'exp.hearing.title': 'Oído', 'exp.hearing.text': 'Escucha el susurro del agua, el crujir del grano al moler y la música que complementa tu experiencia.',
+            // Flavor Wheel
+            'flavor.tag': 'Perfil sensorial', 'flavor.title': 'Rueda de <em>sabores</em>',
+            'flavor.desc': 'Explora las notas de cata de nuestro café. Haz clic en cada categoría para descubrir los matices que hacen único a nuestro café del Quindío.',
+            'flavor.default.title': 'Selecciona una nota', 'flavor.default.desc': 'Haz clic en los segmentos de la rueda para explorar cada familia de sabores presente en nuestro café de especialidad.',
+            'flavor.center1': 'PERFIL', 'flavor.center2': 'SENSORIAL',
+            'flavor.frutal.label': 'Frutal', 'flavor.floral.label': 'Floral', 'flavor.dulce.label': 'Dulce',
+            'flavor.chocolate.label': 'Chocolate', 'flavor.nuez.label': 'Nuez', 'flavor.especiado.label': 'Especiado',
+            'flavor.herbal.label': 'Herbal', 'flavor.caramelo.label': 'Caramelo',
+            'flavor.frutal.title': 'Frutal', 'flavor.frutal.desc': 'Notas de cítricos, frutos rojos y tropicales. Nuestro café presenta matices de naranja, mandarina y frutos del bosque que aportan una acidez brillante y refrescante.',
+            'flavor.floral.title': 'Floral', 'flavor.floral.desc': 'Delicadas notas de jazmín, lavanda y flores de café. Un perfil elegante y aromático que evoca los campos floridos del eje cafetero quindiano.',
+            'flavor.dulce.title': 'Dulce', 'flavor.dulce.desc': 'Notas de panela, miel de abejas y caramelo. La dulzura natural de nuestro café de altura, sin necesidad de añadir azúcar para disfrutar su complejidad.',
+            'flavor.chocolate.title': 'Chocolate', 'flavor.chocolate.desc': 'Notas de cacao oscuro, chocolate con leche y brownie. El cuerpo medio-alto de nuestro café aporta una base achocolatada envolvente y reconfortante.',
+            'flavor.nuez.title': 'Frutos Secos', 'flavor.nuez.desc': 'Notas de almendra tostada, nuez y maní. Un sabor reconfortante y cálido que aporta complejidad al final de cada sorbo, con un finish largo y sedoso.',
+            'flavor.especiado.title': 'Especiado', 'flavor.especiado.desc': 'Notas de canela, clavo y pimienta dulce. Un toque sutil de especias que emerge en la retronasal, añadiendo profundidad y carácter al perfil del café.',
+            'flavor.herbal.title': 'Herbal', 'flavor.herbal.desc': 'Notas de hierbabuena, tomillo y té verde. Un frescor vegetal que equilibra la complejidad del café y evoca los jardines de las fincas cafeteras.',
+            'flavor.caramelo.title': 'Caramelo', 'flavor.caramelo.desc': 'Notas de caramelo, toffee y azúcar morena. La firma distintiva de los cafés de altura del Quindío: una dulzura tostada que perdura en cada sorbo.',
+            // Quote
+            'quote.text': 'El café es el vino del alma, y como el buen vino, necesita todos los sentidos para apreciarlo.',
+            // Menu
+            'menu.tag': 'Nuestra carta', 'menu.title': 'Café de <em>especialidad</em>',
+            'menu.desc': 'Preparaciones artesanales con los mejores granos del Quindío.',
+            'menu.tab.hot': 'Bebidas Calientes', 'menu.tab.cold': 'Bebidas Frías', 'menu.tab.methods': 'Métodos', 'menu.tab.sides': 'Acompañantes',
+            'menu.hot.espresso.name': 'Espresso Clásico', 'menu.hot.espresso.desc': 'Shot concentrado de nuestro blend de la casa. Intenso y aromático.',
+            'menu.hot.cappuccino.name': 'Cappuccino Sensorial', 'menu.hot.cappuccino.desc': 'Espresso doble con leche vaporizada y espuma aterciopelada. Arte latte.',
+            'menu.hot.latte.name': 'Latte de la Casa', 'menu.hot.latte.desc': 'Espresso con leche cremosa y un toque de vainilla natural del Quindío.',
+            'menu.hot.mocha.name': 'Mocha Artesanal', 'menu.hot.mocha.desc': 'Espresso con chocolate artesanal colombiano y leche vaporizada.',
+            'menu.hot.aromatica.name': 'Aromática de la Finca', 'menu.hot.aromatica.desc': 'Infusiones de hierbas aromáticas cultivadas en fincas locales del Quindío.',
+            'menu.hot.chocolate.name': 'Chocolate Campesino', 'menu.hot.chocolate.desc': 'Cacao colombiano de origen preparado con leche fresca.',
+            'menu.cold.coldbrew.name': 'Cold Brew Sensorial', 'menu.cold.coldbrew.desc': 'Extracción en frío por 18 horas. Suave, dulce y refrescante.',
+            'menu.cold.icedlatte.name': 'Iced Latte', 'menu.cold.icedlatte.desc': 'Espresso doble sobre hielo con leche fría y un toque dulce.',
+            'menu.cold.frappe.name': 'Frappé de Café', 'menu.cold.frappe.desc': 'Mezcla helada de espresso, leche, hielo y crema batida artesanal.',
+            'menu.cold.tonic.name': 'Tonic Espresso', 'menu.cold.tonic.desc': 'Espresso sobre agua tónica premium con hielo y twist de naranja.',
+            'menu.cold.limonada.name': 'Limonada de Café', 'menu.cold.limonada.desc': 'Fusión de cold brew con limonada natural y menta fresca.',
+            'menu.method.v60.desc': 'Filtrado manual que resalta las notas más delicadas del grano.',
+            'menu.method.chemex.desc': 'Preparación limpia y brillante. Ideal para notas frutales y florales.',
+            'menu.method.aeropress.desc': 'Método versátil con café concentrado y cuerpo aterciopelado.',
+            'menu.method.french.name': 'Prensa Francesa', 'menu.method.french.desc': 'Inmersión completa para un café robusto y con carácter.',
+            'menu.method.siphon.desc': 'Preparación teatral al vacío. Una experiencia visual y gustativa única.',
+            'menu.sides.croissant.name': 'Croissant de Mantequilla', 'menu.sides.croissant.desc': 'Hojaldrado artesanal horneado diariamente.',
+            'menu.sides.banana.name': 'Torta de Banano', 'menu.sides.banana.desc': 'Receta de la abuela con banano del Quindío y nueces tostadas.',
+            'menu.sides.cheesecake.name': 'Cheesecake de Maracuyá', 'menu.sides.cheesecake.desc': 'Cremoso cheesecake con coulis de maracuyá fresco.',
+            'menu.sides.brownie.name': 'Brownie de Cacao', 'menu.sides.brownie.desc': 'Brownie húmedo con cacao colombiano premium y trozos de nuez.',
+            'menu.sides.cookies.name': 'Galletas Artesanales', 'menu.sides.cookies.desc': 'Variedad del día: avena, chispas de chocolate o mantequilla de maní.',
+            // Gallery
+            'gallery.tag': 'Galería', 'gallery.title': 'Momentos <em>sensoriales</em>',
+            'gallery.cap1': 'El arte de la preparación', 'gallery.cap3': 'Granos de origen',
+            'gallery.cap4': 'Nuestro espacio', 'gallery.cap5': 'Repostería artesanal', 'gallery.cap6': 'Café colombiano',
+            'gallery.cta': 'Síguenos en Instagram',
+            'lightbox.close': 'Cerrar',
+            // Testimonials
+            'test.tag': 'Testimonios', 'test.title': 'Lo que dicen<br>nuestros <em>visitantes</em>',
+            'test.q1': '"Una experiencia increíble. El V60 que probé tenía notas frutales que nunca había percibido en un café. El ambiente es mágico."',
+            'test.q2': '"El mejor café que he probado en el eje cafetero. La atención es excepcional y el lugar te transporta a otro mundo."',
+            'test.q3': '"Vine de vacaciones y fue el mejor hallazgo. La cata de café fue una experiencia única que recomiendo a todo el mundo."',
+            // Reservas
+            'res.tag': 'Experiencias exclusivas', 'res.title': 'Reserva tu<br><em>cata sensorial</em>',
+            'res.text': 'Vive una experiencia privada donde nuestro barista te guiará por un viaje de aromas, sabores y texturas del café de especialidad del Quindío.',
+            'res.f1.title': '90 minutos', 'res.f1.sub': 'Duración de la experiencia',
+            'res.f2.title': '2 - 8 personas', 'res.f2.sub': 'Grupos pequeños e íntimos',
+            'res.f3.title': '5 orígenes', 'res.f3.sub': 'Degustación de variedades',
+            'res.f4.title': 'Certificado', 'res.f4.sub': 'De catador sensorial',
+            'res.form.title': 'Agenda tu experiencia',
+            'res.form.name': 'Nombre completo', 'res.form.name.ph': 'Tu nombre',
+            'res.form.email.ph': 'correo@ejemplo.com', 'res.form.phone': 'Teléfono', 'res.form.date': 'Fecha', 'res.form.guests': 'Personas',
+            'res.form.select': 'Seleccionar', 'res.form.p2': '2 personas', 'res.form.p3': '3 personas',
+            'res.form.p4': '4 personas', 'res.form.p5': '5 personas', 'res.form.p6': '6 personas',
+            'res.form.p7': '7 personas', 'res.form.p8': '8 personas',
+            'res.form.exp': 'Tipo de experiencia', 'res.form.selectexp': 'Seleccionar experiencia',
+            'res.form.cata': 'Cata Sensorial — $45.000/persona', 'res.form.barista': 'Taller de Barista — $65.000/persona',
+            'res.form.origen': 'Tour de Origen — $80.000/persona', 'res.form.premium': 'Experiencia Premium — $120.000/persona',
+            'res.form.submit': 'Reservar experiencia', 'res.form.note': 'Te confirmaremos por WhatsApp en menos de 2 horas.',
+            'res.success.title': '¡Reserva enviada!', 'res.success.text': 'Te contactaremos por WhatsApp para confirmar tu experiencia sensorial. ¡Prepara tus sentidos!',
+            // Contact
+            'contact.tag': 'Encuéntranos', 'contact.title': 'Ven a vivir<br>la <em>experiencia</em>',
+            'contact.text': 'Estamos en Parque Fundadores, en el corazón de Armenia, Quindío, esperándote con una taza del mejor café de especialidad del Eje Cafetero. Llámanos al <a href="tel:+573104058664" style="color:var(--color-gold)">310 405 8664</a>.',
+            'contact.loc.label': 'Ubicación', 'contact.loc.text': 'Parque Fundadores<br>Armenia, Quindío — Eje Cafetero, Colombia',
+            'contact.phone.label': 'Teléfono', 'contact.hours.label': 'Horario',
+            'contact.hours.text': 'Lunes a Sábado: 8:00 AM - 8:00 PM<br>Domingos: 9:00 AM - 6:00 PM',
+            'contact.social.label': 'Redes Sociales',
+            // Footer
+            'footer.nav': 'Navegación', 'footer.social': 'Síguenos',
+            'footer.brand': 'Café de especialidad en Parque Fundadores, Armenia, Quindío. Una experiencia sensorial única en el corazón del Eje Cafetero colombiano. <a href="tel:+573104058664" style="color:var(--color-gold)">☎ 310 405 8664</a>',
+            'footer.rights': '© 2026 Sensorial\'s Café. Todos los derechos reservados.',
+            'footer.made': 'Hecho con <i data-lucide="heart" class="heart-icon"></i> en Armenia, Quindío',
+            // Misc
+            'whatsapp.aria': 'Contáctanos por WhatsApp', 'backtop.aria': 'Volver arriba',
+        },
+        en: {
+            // Nav
+            'nav.home': 'Home', 'nav.about': 'About', 'nav.menu': 'Menu',
+            'nav.gallery': 'Gallery', 'nav.reservations': 'Reservations', 'nav.contact': 'Contact',
+            'nav.toggle': 'Open menu',
+            // Skip & Preloader
+            'skip': 'Skip to main content',
+            'preloader.text': 'Preparing your experience<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>',
+            // Ambient
+            'ambient.label': 'Sound', 'ambient.aria': 'Toggle ambient sound',
+            // Hero
+            'hero.title1': 'Awaken', 'hero.title2': 'your senses',
+            'hero.subtitle': 'Every cup is a sensory journey through the aromas, flavors, and textures<br>of the finest specialty coffee from Armenia, Quindío.',
+            'hero.cta1': 'Live the experience', 'hero.cta2': 'View menu', 'hero.scroll': 'Discover more',
+            // Status & Greeting
+            'status.open': 'Open now', 'status.closed': 'Closed now',
+            'greeting.morning': 'Good morning', 'greeting.afternoon': 'Good afternoon', 'greeting.evening': 'Good evening',
+            'greeting.suffix': ' — Armenia, Quindío',
+            // Marquee
+            'marquee.1': 'Specialty Coffee', 'marquee.2': 'Quindío Origin', 'marquee.3': 'Artisan Roasted',
+            'marquee.4': 'Sensory Experience', 'marquee.5': 'Armenia, Coffee Axis', 'marquee.6': '+1,500 masl',
+            // About
+            'about.tag': 'Our story',
+            'about.title': 'Where every sip<br>tells a <em>story</em>',
+            'about.text1': 'At <strong>Sensorial\'s Café</strong> we believe coffee is much more than a drink — it\'s an experience that awakens each of your senses. Born in the heart of the <strong>Colombian Coffee Axis</strong>, in Armenia, Quindío, we bring the very essence of our coffee-growing land to your cup.',
+            'about.text2': 'We work directly with local farmers to select the finest specialty beans, artisanally roasted to bring out unique origin notes that transform every visit into a memorable moment.',
+            'about.float': 'Quindío origin<br>coffee',
+            'about.stat1': 'Specialty coffee', 'about.stat2': 'Brewing methods', 'about.stat3': 'Meters altitude',
+            // Journey
+            'journey.tag': 'From origin to cup', 'journey.title': 'The coffee <em>journey</em>',
+            'journey.desc': 'Swipe to discover each stage of our specialty coffee\'s journey.',
+            'journey.s1.title': 'The Seed', 'journey.s1.text': 'It all begins with selecting the finest varieties: Castillo, Caturra, and Colombia, grown above 1,500 meters altitude in the mountains of Quindío.',
+            'journey.s2.title': 'The Farm', 'journey.s2.text': 'Our farmers care for each plant with sustainable practices, under natural shade, respecting the earth\'s cycles and the Coffee Axis biodiversity.',
+            'journey.s3.title': 'The Harvest', 'journey.s3.text': 'Hand-picked cherry by cherry, selecting only the fruit at its optimal ripeness. An artisanal process that guarantees quality.',
+            'journey.s4.title': 'The Roast', 'journey.s4.text': 'Artisanal roasting in small batches, controlling temperature and time to develop the unique sensory profile of each origin. Science and art in every batch.',
+            'journey.s5.title': 'Your Cup', 'journey.s5.text': 'The moment where everything comes together. Prepared by expert baristas using your chosen method, each cup tells the complete story of its origin.',
+            // Experience
+            'exp.tag': 'The experience', 'exp.title': 'A journey for<br>the <em>five senses</em>',
+            'exp.desc': 'Every visit to Sensorial\'s is a complete immersion in the world of specialty coffee.',
+            'exp.sight.title': 'Sight', 'exp.sight.text': 'Watch the art of latte making, the amber color of the perfect espresso, and the elegance of each preparation.',
+            'exp.smell.title': 'Smell', 'exp.smell.text': 'Let yourself be enveloped by notes of caramel, chocolate, citrus, and flowers emanating from our freshly roasted beans.',
+            'exp.taste.title': 'Taste', 'exp.taste.text': 'Discover unique flavor profiles: from fruity and chocolaty to floral and spiced notes.',
+            'exp.touch.title': 'Touch', 'exp.touch.text': 'Feel the silky texture of coffee, the warmth of the artisan cup, and the softness of every bite.',
+            'exp.hearing.title': 'Hearing', 'exp.hearing.text': 'Listen to the whisper of water, the crackle of grinding beans, and the music that complements your experience.',
+            // Flavor Wheel
+            'flavor.tag': 'Sensory profile', 'flavor.title': 'Flavor <em>wheel</em>',
+            'flavor.desc': 'Explore the tasting notes of our coffee. Click each category to discover the nuances that make our Quindío coffee unique.',
+            'flavor.default.title': 'Select a note', 'flavor.default.desc': 'Click on the wheel segments to explore each flavor family present in our specialty coffee.',
+            'flavor.center1': 'FLAVOR', 'flavor.center2': 'PROFILE',
+            'flavor.frutal.label': 'Fruity', 'flavor.floral.label': 'Floral', 'flavor.dulce.label': 'Sweet',
+            'flavor.chocolate.label': 'Chocolate', 'flavor.nuez.label': 'Nutty', 'flavor.especiado.label': 'Spiced',
+            'flavor.herbal.label': 'Herbal', 'flavor.caramelo.label': 'Caramel',
+            'flavor.frutal.title': 'Fruity', 'flavor.frutal.desc': 'Notes of citrus, red fruits, and tropical fruits. Our coffee presents hints of orange, tangerine, and forest berries that bring a bright and refreshing acidity.',
+            'flavor.floral.title': 'Floral', 'flavor.floral.desc': 'Delicate notes of jasmine, lavender, and coffee blossoms. An elegant and aromatic profile that evokes the flower fields of the Quindío coffee region.',
+            'flavor.dulce.title': 'Sweet', 'flavor.dulce.desc': 'Notes of panela, honey, and caramel. The natural sweetness of our high-altitude coffee, no sugar needed to enjoy its complexity.',
+            'flavor.chocolate.title': 'Chocolate', 'flavor.chocolate.desc': 'Notes of dark cacao, milk chocolate, and brownie. The medium-high body of our coffee provides an enveloping and comforting chocolate base.',
+            'flavor.nuez.title': 'Nuts', 'flavor.nuez.desc': 'Notes of toasted almond, walnut, and peanut. A comforting and warm flavor that adds complexity to every sip, with a long, silky finish.',
+            'flavor.especiado.title': 'Spiced', 'flavor.especiado.desc': 'Notes of cinnamon, clove, and sweet pepper. A subtle touch of spice that emerges in the aftertaste, adding depth and character to the coffee profile.',
+            'flavor.herbal.title': 'Herbal', 'flavor.herbal.desc': 'Notes of spearmint, thyme, and green tea. A vegetal freshness that balances the complexity of the coffee and evokes the gardens of coffee farms.',
+            'flavor.caramelo.title': 'Caramel', 'flavor.caramelo.desc': 'Notes of caramel, toffee, and brown sugar. The distinctive signature of Quindío\'s high-altitude coffees: a toasty sweetness that lingers in every sip.',
+            // Quote
+            'quote.text': 'Coffee is the wine of the soul, and like fine wine, it needs all the senses to be appreciated.',
+            // Menu
+            'menu.tag': 'Our menu', 'menu.title': 'Specialty <em>coffee</em>',
+            'menu.desc': 'Artisan preparations with the finest beans from Quindío.',
+            'menu.tab.hot': 'Hot Drinks', 'menu.tab.cold': 'Cold Drinks', 'menu.tab.methods': 'Methods', 'menu.tab.sides': 'Sides',
+            'menu.hot.espresso.name': 'Classic Espresso', 'menu.hot.espresso.desc': 'Concentrated shot from our house blend. Intense and aromatic.',
+            'menu.hot.cappuccino.name': 'Sensorial Cappuccino', 'menu.hot.cappuccino.desc': 'Double espresso with steamed milk and velvety foam. Latte art.',
+            'menu.hot.latte.name': 'House Latte', 'menu.hot.latte.desc': 'Espresso with creamy milk and a touch of natural Quindío vanilla.',
+            'menu.hot.mocha.name': 'Artisan Mocha', 'menu.hot.mocha.desc': 'Espresso with artisan Colombian chocolate and steamed milk.',
+            'menu.hot.aromatica.name': 'Farm Herbal Infusion', 'menu.hot.aromatica.desc': 'Aromatic herb infusions grown on local Quindío farms.',
+            'menu.hot.chocolate.name': 'Country Chocolate', 'menu.hot.chocolate.desc': 'Colombian origin cacao prepared with fresh milk.',
+            'menu.cold.coldbrew.name': 'Sensorial Cold Brew', 'menu.cold.coldbrew.desc': '18-hour cold extraction. Smooth, sweet, and refreshing.',
+            'menu.cold.icedlatte.name': 'Iced Latte', 'menu.cold.icedlatte.desc': 'Double espresso over ice with cold milk and a sweet touch.',
+            'menu.cold.frappe.name': 'Coffee Frappé', 'menu.cold.frappe.desc': 'Blended espresso, milk, ice, and artisan whipped cream.',
+            'menu.cold.tonic.name': 'Tonic Espresso', 'menu.cold.tonic.desc': 'Espresso over premium tonic water with ice and orange twist.',
+            'menu.cold.limonada.name': 'Coffee Lemonade', 'menu.cold.limonada.desc': 'Cold brew blended with natural lemonade and fresh mint.',
+            'menu.method.v60.desc': 'Manual pour-over that highlights the most delicate notes of the bean.',
+            'menu.method.chemex.desc': 'Clean and bright brew. Ideal for fruity and floral notes.',
+            'menu.method.aeropress.desc': 'Versatile method with concentrated coffee and velvety body.',
+            'menu.method.french.name': 'French Press', 'menu.method.french.desc': 'Full immersion for a robust coffee with character.',
+            'menu.method.siphon.desc': 'Theatrical vacuum brewing. A unique visual and taste experience.',
+            'menu.sides.croissant.name': 'Butter Croissant', 'menu.sides.croissant.desc': 'Artisan puff pastry baked daily.',
+            'menu.sides.banana.name': 'Banana Cake', 'menu.sides.banana.desc': 'Grandma\'s recipe with Quindío banana and toasted walnuts.',
+            'menu.sides.cheesecake.name': 'Passion Fruit Cheesecake', 'menu.sides.cheesecake.desc': 'Creamy cheesecake with fresh passion fruit coulis.',
+            'menu.sides.brownie.name': 'Cacao Brownie', 'menu.sides.brownie.desc': 'Moist brownie with premium Colombian cacao and walnut pieces.',
+            'menu.sides.cookies.name': 'Artisan Cookies', 'menu.sides.cookies.desc': 'Daily variety: oat, chocolate chip, or peanut butter.',
+            // Gallery
+            'gallery.tag': 'Gallery', 'gallery.title': 'Sensory <em>moments</em>',
+            'gallery.cap1': 'The art of brewing', 'gallery.cap3': 'Origin beans',
+            'gallery.cap4': 'Our space', 'gallery.cap5': 'Artisan pastries', 'gallery.cap6': 'Colombian coffee',
+            'gallery.cta': 'Follow us on Instagram',
+            'lightbox.close': 'Close',
+            // Testimonials
+            'test.tag': 'Testimonials', 'test.title': 'What our<br><em>visitors</em> say',
+            'test.q1': '"An incredible experience. The V60 I tried had fruity notes I had never perceived in coffee. The atmosphere is magical."',
+            'test.q2': '"The best coffee I\'ve had in the Coffee Axis. The service is exceptional and the place transports you to another world."',
+            'test.q3': '"I came on vacation and it was the best find. The coffee tasting was a unique experience I recommend to everyone."',
+            // Reservas
+            'res.tag': 'Exclusive experiences', 'res.title': 'Book your<br><em>sensory tasting</em>',
+            'res.text': 'Enjoy a private experience where our barista will guide you through a journey of aromas, flavors, and textures of Quindío\'s specialty coffee.',
+            'res.f1.title': '90 minutes', 'res.f1.sub': 'Experience duration',
+            'res.f2.title': '2 - 8 people', 'res.f2.sub': 'Small, intimate groups',
+            'res.f3.title': '5 origins', 'res.f3.sub': 'Variety tasting',
+            'res.f4.title': 'Certificate', 'res.f4.sub': 'Sensory cupper certificate',
+            'res.form.title': 'Schedule your experience',
+            'res.form.name': 'Full name', 'res.form.name.ph': 'Your name',
+            'res.form.email.ph': 'email@example.com', 'res.form.phone': 'Phone', 'res.form.date': 'Date', 'res.form.guests': 'Guests',
+            'res.form.select': 'Select', 'res.form.p2': '2 people', 'res.form.p3': '3 people',
+            'res.form.p4': '4 people', 'res.form.p5': '5 people', 'res.form.p6': '6 people',
+            'res.form.p7': '7 people', 'res.form.p8': '8 people',
+            'res.form.exp': 'Experience type', 'res.form.selectexp': 'Select experience',
+            'res.form.cata': 'Sensory Tasting — $45,000/person', 'res.form.barista': 'Barista Workshop — $65,000/person',
+            'res.form.origen': 'Origin Tour — $80,000/person', 'res.form.premium': 'Premium Experience — $120,000/person',
+            'res.form.submit': 'Book experience', 'res.form.note': 'We\'ll confirm via WhatsApp within 2 hours.',
+            'res.success.title': 'Booking sent!', 'res.success.text': 'We\'ll contact you via WhatsApp to confirm your sensory experience. Get your senses ready!',
+            // Contact
+            'contact.tag': 'Find us', 'contact.title': 'Come live<br>the <em>experience</em>',
+            'contact.text': 'We\'re at Parque Fundadores, in the heart of Armenia, Quindío, waiting for you with a cup of the finest specialty coffee from the Coffee Axis. Call us at <a href="tel:+573104058664" style="color:var(--color-gold)">310 405 8664</a>.',
+            'contact.loc.label': 'Location', 'contact.loc.text': 'Parque Fundadores<br>Armenia, Quindío — Coffee Axis, Colombia',
+            'contact.phone.label': 'Phone', 'contact.hours.label': 'Hours',
+            'contact.hours.text': 'Monday to Saturday: 8:00 AM - 8:00 PM<br>Sundays: 9:00 AM - 6:00 PM',
+            'contact.social.label': 'Social Media',
+            // Footer
+            'footer.nav': 'Navigation', 'footer.social': 'Follow us',
+            'footer.brand': 'Specialty coffee at Parque Fundadores, Armenia, Quindío. A unique sensory experience in the heart of the Colombian Coffee Axis. <a href="tel:+573104058664" style="color:var(--color-gold)">☎ 310 405 8664</a>',
+            'footer.rights': '© 2026 Sensorial\'s Café. All rights reserved.',
+            'footer.made': 'Made with <i data-lucide="heart" class="heart-icon"></i> in Armenia, Quindío',
+            // Misc
+            'whatsapp.aria': 'Contact us on WhatsApp', 'backtop.aria': 'Back to top',
+        }
+    };
+
+    // ---- Current Language ----
+    let currentLang = localStorage.getItem('cafe-lang') || 'es';
+
+    // ---- Reduced motion preference ----
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // Init Lucide (defer-safe)
@@ -44,6 +313,96 @@
         setTimeout(hidePreloader, 4000);
     }
 
+    // ---- Theme Toggle ----
+    const themeToggle = document.getElementById('themeToggle');
+    const iconSun = themeToggle?.querySelector('.icon-sun');
+    const iconMoon = themeToggle?.querySelector('.icon-moon');
+
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('cafe-theme', theme);
+        if (iconSun && iconMoon) {
+            iconSun.style.display = theme === 'dark' ? 'inline' : 'none';
+            iconMoon.style.display = theme === 'light' ? 'inline' : 'none';
+        }
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.content = theme === 'light' ? '#faf8f5' : '#0a0a0a';
+    }
+
+    // Initialize theme from localStorage (already set by inline script, but sync icons)
+    const savedTheme = localStorage.getItem('cafe-theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle?.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // ---- Language Toggle ----
+    const langToggle = document.getElementById('langToggle');
+    const langLabel = langToggle?.querySelector('.lang-label');
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        const t = T[lang];
+        localStorage.setItem('cafe-lang', lang);
+        document.documentElement.lang = lang;
+
+        // Toggle label shows the OTHER language
+        if (langLabel) langLabel.textContent = lang === 'es' ? 'EN' : 'ES';
+
+        // Update all data-i18n elements
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.dataset.i18n;
+            if (t[key]) {
+                if (el.hasAttribute('data-i18n-html')) {
+                    el.innerHTML = t[key];
+                } else {
+                    el.textContent = t[key];
+                }
+            }
+        });
+
+        // Update placeholders
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.dataset.i18nPlaceholder;
+            if (t[key]) el.placeholder = t[key];
+        });
+
+        // Update aria-labels
+        document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+            const key = el.dataset.i18nAria;
+            if (t[key]) el.setAttribute('aria-label', t[key]);
+        });
+
+        // Update flavor wheel data attributes
+        document.querySelectorAll('.wheel-segment').forEach(seg => {
+            const flavor = seg.dataset.flavor;
+            if (t['flavor.' + flavor + '.title']) seg.dataset.title = t['flavor.' + flavor + '.title'];
+            if (t['flavor.' + flavor + '.desc']) seg.dataset.desc = t['flavor.' + flavor + '.desc'];
+        });
+
+        // Update gallery captions
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            const cap = item.dataset['caption' + (lang === 'es' ? 'Es' : 'En')];
+            if (cap) item.dataset.caption = cap;
+        });
+
+        // Re-run dynamic text
+        updateGreetingAndStatus();
+
+        // Re-init Lucide for any innerHTML replacements
+        if (window.lucide) setTimeout(() => lucide.createIcons(), 50);
+    }
+
+    // Initialize language
+    if (langLabel) langLabel.textContent = currentLang === 'es' ? 'EN' : 'ES';
+    if (currentLang !== 'es') setLanguage(currentLang);
+
+    langToggle?.addEventListener('click', () => {
+        setLanguage(currentLang === 'es' ? 'en' : 'es');
+    });
+
     // ---- Dynamic Greeting & Open/Closed Status ----
     function updateGreetingAndStatus() {
         const now = new Date();
@@ -52,14 +411,15 @@
         const greetingEl = document.getElementById('dynamicGreeting');
         const statusBadge = document.getElementById('statusBadge');
         const statusText = document.getElementById('statusText');
+        const t = T[currentLang];
 
         let greeting;
-        if (hour >= 5 && hour < 12) greeting = 'Buenos días';
-        else if (hour >= 12 && hour < 18) greeting = 'Buenas tardes';
-        else greeting = 'Buenas noches';
+        if (hour >= 5 && hour < 12) greeting = t['greeting.morning'];
+        else if (hour >= 12 && hour < 18) greeting = t['greeting.afternoon'];
+        else greeting = t['greeting.evening'];
 
         if (greetingEl) {
-            greetingEl.textContent = `${greeting} — Armenia, Quindío`;
+            greetingEl.textContent = greeting + t['greeting.suffix'];
         }
 
         // Open/closed logic (Mon-Sat 8-20, Sun 9-18)
@@ -73,10 +433,10 @@
         if (statusBadge && statusText) {
             if (isOpen) {
                 statusBadge.classList.remove('closed');
-                statusText.textContent = 'Abierto ahora';
+                statusText.textContent = t['status.open'];
             } else {
                 statusBadge.classList.add('closed');
-                statusText.textContent = 'Cerrado ahora';
+                statusText.textContent = t['status.closed'];
             }
         }
     }
@@ -94,14 +454,16 @@
     document.addEventListener('mousemove', (e) => {
         cursorX = e.clientX;
         cursorY = e.clientY;
-        if (!glowActive) { cursorGlow.classList.add('active'); glowActive = true; }
+        if (!glowActive && cursorGlow) { cursorGlow.classList.add('active'); glowActive = true; }
     });
 
     function animateCursorGlow() {
         glowX += (cursorX - glowX) * 0.08;
         glowY += (cursorY - glowY) * 0.08;
-        cursorGlow.style.left = glowX + 'px';
-        cursorGlow.style.top = glowY + 'px';
+        if (cursorGlow) {
+            cursorGlow.style.left = glowX + 'px';
+            cursorGlow.style.top = glowY + 'px';
+        }
         requestAnimationFrame(animateCursorGlow);
     }
     if (window.innerWidth > 768 && !prefersReducedMotion) animateCursorGlow();
@@ -139,7 +501,7 @@
     // ---- Text Scramble Effect ----
     function scrambleText(element) {
         const original = element.textContent;
-        const chars = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóú';
+        const chars = currentLang === 'es' ? 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóú' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         let iteration = 0;
 
         const interval = setInterval(() => {
@@ -187,7 +549,8 @@
         lastScrollY = y;
 
         // Back to top
-        document.getElementById('backToTop').classList.toggle('visible', y > 600);
+        const btt = document.getElementById('backToTop');
+        if (btt) btt.classList.toggle('visible', y > 600);
 
         ticking = false;
     }
@@ -325,6 +688,9 @@
                     flavorDetailIcon.textContent = seg.dataset.icon;
                     flavorDetailTitle.textContent = seg.dataset.title;
                     flavorDetailDesc.textContent = seg.dataset.desc;
+                    // Remove data-i18n so language switch doesn't overwrite active selection
+                    flavorDetailTitle.removeAttribute('data-i18n');
+                    flavorDetailDesc.removeAttribute('data-i18n');
                 }
             });
         });
@@ -455,9 +821,8 @@
 
         reservasForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            // Simulate submission
             const btn = reservasForm.querySelector('button[type="submit"]');
-            btn.innerHTML = '<span>Enviando...</span>';
+            btn.innerHTML = '<span>' + (currentLang === 'es' ? 'Enviando...' : 'Sending...') + '</span>';
             btn.disabled = true;
 
             setTimeout(() => {
@@ -522,12 +887,12 @@
             chordNotes.forEach((freq, i) => {
                 const osc = audioCtx.createOscillator();
                 osc.type = 'sine';
-                osc.frequency.value = freq * 0.5; // one octave lower for warmth
+                osc.frequency.value = freq * 0.5;
                 const lfo = audioCtx.createOscillator();
                 lfo.type = 'sine';
-                lfo.frequency.value = 0.15 + i * 0.05; // slow shimmer
+                lfo.frequency.value = 0.15 + i * 0.05;
                 const lfoG = audioCtx.createGain();
-                lfoG.gain.value = 2; // subtle vibrato
+                lfoG.gain.value = 2;
                 lfo.connect(lfoG);
                 lfoG.connect(osc.frequency);
                 const g = audioCtx.createGain();
@@ -550,8 +915,6 @@
                     const t = audioCtx.currentTime;
                     const note = penta[Math.floor(Math.random() * penta.length)];
                     const dur = 1.5 + Math.random() * 2;
-
-                    // Main tone
                     const osc = audioCtx.createOscillator();
                     osc.type = 'sine';
                     osc.frequency.value = note;
@@ -563,8 +926,6 @@
                     env.connect(master);
                     osc.start(t);
                     osc.stop(t + dur + 0.1);
-
-                    // Soft harmonic overtone
                     const osc2 = audioCtx.createOscillator();
                     osc2.type = 'sine';
                     osc2.frequency.value = note * 2;
@@ -576,13 +937,12 @@
                     env2.connect(master);
                     osc2.start(t);
                     osc2.stop(t + dur + 0.1);
-
                     scheduleChime();
                 }, (2.5 + Math.random() * 4) * 1000);
             }
             scheduleChime();
 
-            // --- Layer 3: Soft wind / breeze (filtered noise, very gentle) ---
+            // --- Layer 3: Soft wind / breeze ---
             const breezeLen = 4 * audioCtx.sampleRate;
             const breezeBuf = audioCtx.createBuffer(2, breezeLen, audioCtx.sampleRate);
             for (let ch = 0; ch < 2; ch++) {
@@ -638,7 +998,7 @@
             }
             scheduleBird();
 
-            // --- Layer 5: Gentle music-box melody (random pentatonic walk) ---
+            // --- Layer 5: Gentle music-box melody ---
             function scheduleMelody() {
                 if (!alive()) return;
                 setTimeout(() => {
@@ -647,8 +1007,7 @@
                     const steps = 3 + Math.floor(Math.random() * 4);
                     let noteIdx = Math.floor(Math.random() * penta.length);
                     for (let s = 0; s < steps; s++) {
-                        noteIdx = Math.max(0, Math.min(penta.length - 1,
-                            noteIdx + Math.floor(Math.random() * 3) - 1));
+                        noteIdx = Math.max(0, Math.min(penta.length - 1, noteIdx + Math.floor(Math.random() * 3) - 1));
                         const freq = penta[noteIdx];
                         const offset = s * 0.35;
                         const osc = audioCtx.createOscillator();
@@ -698,7 +1057,7 @@
     }
 
     // ---- Back to Top ----
-    document.getElementById('backToTop').addEventListener('click', () => {
+    document.getElementById('backToTop')?.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
@@ -714,7 +1073,7 @@
     });
 
     // ---- Easter Egg: Konami Code = Coffee Bean Rain ----
-    const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // Up Up Down Down Left Right Left Right B A
+    const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
     let konamiIndex = 0;
 
     document.addEventListener('keydown', (e) => {
@@ -764,14 +1123,12 @@
         function animate() {
             frame++;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
             beans.forEach(b => {
                 b.y += b.speed;
                 b.rotation += b.rotSpeed;
                 b.x += Math.sin(frame * 0.02 + b.speed) * 0.5;
                 drawBean(b);
             });
-
             if (frame < 300) {
                 requestAnimationFrame(animate);
             } else {

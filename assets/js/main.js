@@ -514,184 +514,159 @@
             master.connect(audioCtx.destination);
             const alive = () => audioCtx && audioCtx.state !== 'closed';
 
-            // --- Layer 1: Warm room tone (cozy café hum) ---
-            const roomLen = 2 * audioCtx.sampleRate;
-            const roomBuf = audioCtx.createBuffer(2, roomLen, audioCtx.sampleRate);
+            // Pentatonic scale frequencies (happy, no dissonance)
+            const penta = [261.6, 293.7, 329.6, 392.0, 440.0, 523.3, 587.3, 659.3];
+
+            // --- Layer 1: Warm, dreamy pad (gentle chord) ---
+            const chordNotes = [261.6, 329.6, 392.0]; // C major triad
+            chordNotes.forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.value = freq * 0.5; // one octave lower for warmth
+                const lfo = audioCtx.createOscillator();
+                lfo.type = 'sine';
+                lfo.frequency.value = 0.15 + i * 0.05; // slow shimmer
+                const lfoG = audioCtx.createGain();
+                lfoG.gain.value = 2; // subtle vibrato
+                lfo.connect(lfoG);
+                lfoG.connect(osc.frequency);
+                const g = audioCtx.createGain();
+                g.gain.value = 0.06;
+                const lp = audioCtx.createBiquadFilter();
+                lp.type = 'lowpass';
+                lp.frequency.value = 600;
+                osc.connect(lp);
+                lp.connect(g);
+                g.connect(master);
+                osc.start();
+                lfo.start();
+            });
+
+            // --- Layer 2: Gentle melodic chimes (pentatonic) ---
+            function scheduleChime() {
+                if (!alive()) return;
+                setTimeout(() => {
+                    if (!alive()) return;
+                    const t = audioCtx.currentTime;
+                    const note = penta[Math.floor(Math.random() * penta.length)];
+                    const dur = 1.5 + Math.random() * 2;
+
+                    // Main tone
+                    const osc = audioCtx.createOscillator();
+                    osc.type = 'sine';
+                    osc.frequency.value = note;
+                    const env = audioCtx.createGain();
+                    env.gain.setValueAtTime(0, t);
+                    env.gain.linearRampToValueAtTime(0.04, t + 0.02);
+                    env.gain.exponentialRampToValueAtTime(0.001, t + dur);
+                    osc.connect(env);
+                    env.connect(master);
+                    osc.start(t);
+                    osc.stop(t + dur + 0.1);
+
+                    // Soft harmonic overtone
+                    const osc2 = audioCtx.createOscillator();
+                    osc2.type = 'sine';
+                    osc2.frequency.value = note * 2;
+                    const env2 = audioCtx.createGain();
+                    env2.gain.setValueAtTime(0, t);
+                    env2.gain.linearRampToValueAtTime(0.012, t + 0.01);
+                    env2.gain.exponentialRampToValueAtTime(0.001, t + dur * 0.6);
+                    osc2.connect(env2);
+                    env2.connect(master);
+                    osc2.start(t);
+                    osc2.stop(t + dur + 0.1);
+
+                    scheduleChime();
+                }, (2.5 + Math.random() * 4) * 1000);
+            }
+            scheduleChime();
+
+            // --- Layer 3: Soft wind / breeze (filtered noise, very gentle) ---
+            const breezeLen = 4 * audioCtx.sampleRate;
+            const breezeBuf = audioCtx.createBuffer(2, breezeLen, audioCtx.sampleRate);
             for (let ch = 0; ch < 2; ch++) {
-                const d = roomBuf.getChannelData(ch);
+                const d = breezeBuf.getChannelData(ch);
                 let prev = 0;
-                for (let i = 0; i < roomLen; i++) {
-                    prev = (prev + 0.02 * (Math.random() * 2 - 1)) / 1.02;
-                    d[i] = prev * 3;
+                for (let i = 0; i < breezeLen; i++) {
+                    prev = (prev + 0.015 * (Math.random() * 2 - 1)) / 1.015;
+                    const wave = Math.sin(i / audioCtx.sampleRate * 0.4 * Math.PI) * 0.5 + 0.5;
+                    d[i] = prev * 2.5 * wave;
                 }
             }
-            const roomSrc = audioCtx.createBufferSource();
-            roomSrc.buffer = roomBuf;
-            roomSrc.loop = true;
-            const roomLp = audioCtx.createBiquadFilter();
-            roomLp.type = 'lowpass';
-            roomLp.frequency.value = 280;
-            const roomG = audioCtx.createGain();
-            roomG.gain.value = 0.45;
-            roomSrc.connect(roomLp);
-            roomLp.connect(roomG);
-            roomG.connect(master);
-            roomSrc.start();
+            const breezeSrc = audioCtx.createBufferSource();
+            breezeSrc.buffer = breezeBuf;
+            breezeSrc.loop = true;
+            const breezeLp = audioCtx.createBiquadFilter();
+            breezeLp.type = 'lowpass';
+            breezeLp.frequency.value = 800;
+            const breezeG = audioCtx.createGain();
+            breezeG.gain.value = 0.08;
+            breezeSrc.connect(breezeLp);
+            breezeLp.connect(breezeG);
+            breezeG.connect(master);
+            breezeSrc.start();
 
-            // --- Layer 2: Coffee grinder bursts ---
-            function scheduleGrinder() {
-                if (!alive()) return;
-                setTimeout(() => {
-                    if (!alive()) return;
-                    const dur = 2 + Math.random() * 2.5;
-                    const len = audioCtx.sampleRate * dur;
-                    const buf = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
-                    const d = buf.getChannelData(0);
-                    for (let i = 0; i < len; i++) {
-                        d[i] = (Math.random() * 2 - 1) * (0.6 + 0.4 * Math.sin(i * 0.08));
-                    }
-                    const src = audioCtx.createBufferSource();
-                    src.buffer = buf;
-                    const bp = audioCtx.createBiquadFilter();
-                    bp.type = 'bandpass';
-                    bp.frequency.value = 300 + Math.random() * 400;
-                    bp.Q.value = 3;
-                    const hp = audioCtx.createBiquadFilter();
-                    hp.type = 'highpass';
-                    hp.frequency.value = 150;
-                    const env = audioCtx.createGain();
-                    const t = audioCtx.currentTime;
-                    env.gain.setValueAtTime(0, t);
-                    env.gain.linearRampToValueAtTime(0.025, t + 0.15);
-                    env.gain.setValueAtTime(0.025, t + dur - 0.3);
-                    env.gain.linearRampToValueAtTime(0, t + dur);
-                    src.connect(bp);
-                    bp.connect(hp);
-                    hp.connect(env);
-                    env.connect(master);
-                    src.start(t);
-                    src.stop(t + dur);
-                    scheduleGrinder();
-                }, (18 + Math.random() * 25) * 1000);
-            }
-            scheduleGrinder();
-
-            // --- Layer 3: Espresso machine / steam wand hiss ---
-            function scheduleSteam() {
-                if (!alive()) return;
-                setTimeout(() => {
-                    if (!alive()) return;
-                    const dur = 2.5 + Math.random() * 3;
-                    const len = audioCtx.sampleRate * dur;
-                    const buf = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
-                    const d = buf.getChannelData(0);
-                    for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
-                    const src = audioCtx.createBufferSource();
-                    src.buffer = buf;
-                    const hp = audioCtx.createBiquadFilter();
-                    hp.type = 'highpass';
-                    hp.frequency.value = 3500 + Math.random() * 2000;
-                    hp.Q.value = 0.5;
-                    const env = audioCtx.createGain();
-                    const t = audioCtx.currentTime;
-                    env.gain.setValueAtTime(0, t);
-                    env.gain.linearRampToValueAtTime(0.012, t + 0.3);
-                    env.gain.setValueAtTime(0.015, t + dur * 0.7);
-                    env.gain.exponentialRampToValueAtTime(0.001, t + dur);
-                    src.connect(hp);
-                    hp.connect(env);
-                    env.connect(master);
-                    src.start(t);
-                    src.stop(t + dur);
-                    scheduleSteam();
-                }, (15 + Math.random() * 30) * 1000);
-            }
-            scheduleSteam();
-
-            // --- Layer 4: Ceramic cup & saucer clinks ---
-            function scheduleClink() {
+            // --- Layer 4: Happy little bird chirps ---
+            function scheduleBird() {
                 if (!alive()) return;
                 setTimeout(() => {
                     if (!alive()) return;
                     const t = audioCtx.currentTime;
-                    const baseFreq = 2200 + Math.random() * 1500;
-                    [1, 1.5, 2.1].forEach((h, idx) => {
+                    const baseFreq = 1800 + Math.random() * 1200;
+                    const chirps = 2 + Math.floor(Math.random() * 3);
+                    for (let c = 0; c < chirps; c++) {
                         const osc = audioCtx.createOscillator();
                         osc.type = 'sine';
-                        osc.frequency.value = baseFreq * h;
+                        const startF = baseFreq + Math.random() * 400;
+                        const endF = startF + 200 + Math.random() * 600;
+                        const offset = c * 0.12;
+                        osc.frequency.setValueAtTime(startF, t + offset);
+                        osc.frequency.linearRampToValueAtTime(endF, t + offset + 0.06);
+                        osc.frequency.linearRampToValueAtTime(startF * 0.95, t + offset + 0.1);
                         const env = audioCtx.createGain();
-                        const vol = (0.025 - idx * 0.008) * (0.7 + Math.random() * 0.3);
-                        env.gain.setValueAtTime(0, t);
-                        env.gain.linearRampToValueAtTime(Math.max(vol, 0.003), t + 0.003);
-                        env.gain.exponentialRampToValueAtTime(0.0001, t + 0.08 + Math.random() * 0.12);
+                        env.gain.setValueAtTime(0, t + offset);
+                        env.gain.linearRampToValueAtTime(0.015, t + offset + 0.015);
+                        env.gain.exponentialRampToValueAtTime(0.001, t + offset + 0.1);
                         osc.connect(env);
                         env.connect(master);
-                        osc.start(t);
-                        osc.stop(t + 0.25);
-                    });
-                    scheduleClink();
-                }, (4 + Math.random() * 9) * 1000);
+                        osc.start(t + offset);
+                        osc.stop(t + offset + 0.15);
+                    }
+                    scheduleBird();
+                }, (8 + Math.random() * 15) * 1000);
             }
-            scheduleClink();
+            scheduleBird();
 
-            // --- Layer 5: Water pour (drip / pour-over) ---
-            function schedulePour() {
+            // --- Layer 5: Gentle music-box melody (random pentatonic walk) ---
+            function scheduleMelody() {
                 if (!alive()) return;
                 setTimeout(() => {
                     if (!alive()) return;
-                    const dur = 3 + Math.random() * 3;
-                    const len = audioCtx.sampleRate * dur;
-                    const buf = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
-                    const d = buf.getChannelData(0);
-                    for (let i = 0; i < len; i++) {
-                        const drip = Math.sin(i * 0.3) * 0.3;
-                        d[i] = (Math.random() * 2 - 1 + drip) * 0.5;
-                    }
-                    const src = audioCtx.createBufferSource();
-                    src.buffer = buf;
-                    const bp = audioCtx.createBiquadFilter();
-                    bp.type = 'bandpass';
-                    bp.frequency.value = 1200 + Math.random() * 800;
-                    bp.Q.value = 1.5;
-                    const env = audioCtx.createGain();
                     const t = audioCtx.currentTime;
-                    env.gain.setValueAtTime(0, t);
-                    env.gain.linearRampToValueAtTime(0.018, t + 0.5);
-                    env.gain.setValueAtTime(0.018, t + dur * 0.8);
-                    env.gain.exponentialRampToValueAtTime(0.001, t + dur);
-                    src.connect(bp);
-                    bp.connect(env);
-                    env.connect(master);
-                    src.start(t);
-                    src.stop(t + dur);
-                    schedulePour();
-                }, (12 + Math.random() * 20) * 1000);
+                    const steps = 3 + Math.floor(Math.random() * 4);
+                    let noteIdx = Math.floor(Math.random() * penta.length);
+                    for (let s = 0; s < steps; s++) {
+                        noteIdx = Math.max(0, Math.min(penta.length - 1,
+                            noteIdx + Math.floor(Math.random() * 3) - 1));
+                        const freq = penta[noteIdx];
+                        const offset = s * 0.35;
+                        const osc = audioCtx.createOscillator();
+                        osc.type = 'triangle';
+                        osc.frequency.value = freq;
+                        const env = audioCtx.createGain();
+                        env.gain.setValueAtTime(0, t + offset);
+                        env.gain.linearRampToValueAtTime(0.025, t + offset + 0.01);
+                        env.gain.exponentialRampToValueAtTime(0.001, t + offset + 0.8);
+                        osc.connect(env);
+                        env.connect(master);
+                        osc.start(t + offset);
+                        osc.stop(t + offset + 1);
+                    }
+                    scheduleMelody();
+                }, (10 + Math.random() * 18) * 1000);
             }
-            schedulePour();
-
-            // --- Layer 6: Soft background murmur ---
-            const murmLen = 4 * audioCtx.sampleRate;
-            const murmBuf = audioCtx.createBuffer(2, murmLen, audioCtx.sampleRate);
-            for (let ch = 0; ch < 2; ch++) {
-                const d = murmBuf.getChannelData(ch);
-                for (let i = 0; i < murmLen; i++) {
-                    const speech = Math.sin(i / audioCtx.sampleRate * Math.PI * (2 + ch));
-                    d[i] = (Math.random() * 2 - 1) * (0.3 + 0.7 * Math.abs(speech));
-                }
-            }
-            const murmSrc = audioCtx.createBufferSource();
-            murmSrc.buffer = murmBuf;
-            murmSrc.loop = true;
-            const murmBp = audioCtx.createBiquadFilter();
-            murmBp.type = 'bandpass';
-            murmBp.frequency.value = 500;
-            murmBp.Q.value = 2;
-            const murmG = audioCtx.createGain();
-            murmG.gain.value = 0.03;
-            murmSrc.connect(murmBp);
-            murmBp.connect(murmG);
-            murmG.connect(master);
-            murmSrc.start();
+            scheduleMelody();
 
             return { gainNode: master };
         } catch (e) {
